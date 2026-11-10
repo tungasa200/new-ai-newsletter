@@ -28,6 +28,7 @@ from ainews.models import (
     KnowledgeUpdate,
     RenderedMail,
 )
+from ainews.ops import notify, runlog
 from ainews.settings import KST, Settings, load_sources
 from ainews.util.cost import CHARS_PER_TOKEN_ESTIMATE, CostTracker
 from ainews.util.http import Http
@@ -99,7 +100,7 @@ def run(
     if not opts.force and not opts.dry_run and st.sent_today(sent, runs, today):
         log.info("오늘(%s) 이미 발송했다. 종료.", today)
         record.status = "skipped"
-        _finish(store, runs, record, cost, write_runs)
+        _finish(store, runs, record, cost, settings, write=write_runs)
         return RunResult(status="skipped")
 
     if llm is None:
@@ -174,10 +175,11 @@ def run(
         log.exception("단계 %s에서 실패: %s", stage, type(exc).__name__)
         result.status = record.status = "failed"
         result.failed_stage = record.failed_stage = stage
+        record.error = type(exc).__name__
         return result
     finally:
         http.close()
-        _finish(store, runs, record, cost, write_runs)
+        _finish(store, runs, record, cost, settings, write=write_runs)
 
 
 def _dedupe(items: list[Item]) -> list[Item]:
@@ -267,6 +269,8 @@ def _finish(
     runs: st.RunsFile,
     record: st.RunRecord,
     cost: CostTracker,
+    settings: Settings,
+    *,
     write: bool,
 ) -> None:
     record.finished_at = dt.datetime.now(dt.UTC)
@@ -279,5 +283,17 @@ def _finish(
         record.sent,
         record.cost_usd,
     )
-    if write:
-        store.save_runs(st.add_run(runs, record))
+    if not write:  # --offline: 기록도 알림도 남기지 않는다
+        return
+    runs = st.add_run(runs, record)
+    budget = cost.budget_usd
+    # 요약·알림이 실패해도 runs.json 저장과 실행 결과를 막지 않는다.
+    try:
+        summary = runlog.summarize(record, runs, budget_usd=budget)
+        runlog.write_step_summary(summary, settings.step_summary_path)
+        alert = notify.build_alert(record, runs, budget_usd=budget)
+        if alert is not None:
+            notify.send_alert(alert, settings)
+    except Exception:
+        log.exception("실행 요약·운영 알림 실패(무시하고 계속)")
+    store.save_runs(runs)

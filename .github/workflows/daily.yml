@@ -1,0 +1,97 @@
+# 매일 아침 뉴스레터 발송(D-02, D-03, D-10).
+# - cron 2회: 06:30·07:30 KST. 두 번째 실행은 그날 이미 발송했으면 코드가 바로 끝낸다(FR-MAIL-04).
+# - 상태(sent.json·runs.json·knowledge/)는 state 가지에 두고, 이 workflow가 커밋·push한다.
+#   push가 실패하면 job을 실패로 둔다(발송 이력이 사라진 채 넘어가지 않게).
+# - 수동 실행: Actions 탭 → daily → Run workflow. 기본은 dry-run(메일 대신 미리보기 artifact).
+name: daily
+
+on:
+  schedule:
+    - cron: "30 21 * * *" # 06:30 KST
+    - cron: "30 22 * * *" # 07:30 KST
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "메일을 보내지 않고 미리보기 HTML만 만든다"
+        type: boolean
+        default: true
+      force:
+        description: "오늘 이미 발송했어도 다시 보낸다(dry_run을 끈 때만 의미 있음)"
+        type: boolean
+        default: false
+
+# 동시에 두 번 돌면 state 커밋이 충돌한다. 앞 실행을 취소하지 않고 기다린다.
+concurrency:
+  group: ainews-daily
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Install
+        run: python -m pip install .
+
+      - name: Check out state branch
+        id: state
+        run: |
+          if git ls-remote --exit-code --heads origin state >/dev/null; then
+            git fetch --depth=1 origin state:refs/remotes/origin/state
+            git worktree add -B state state origin/state
+          else
+            echo "state 가지가 없어 새로 만든다"
+            git worktree add --orphan -b state state
+          fi
+
+      - name: Run
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
+          OPS_EMAIL: ${{ secrets.OPS_EMAIL }}
+          AINEWS_STATE_DIR: state
+          # 입력값은 스크립트에 직접 넣지 않고 환경변수로 넘긴다(스크립트 주입 방지).
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}
+          FORCE: ${{ github.event_name == 'workflow_dispatch' && inputs.force }}
+        run: |
+          args=()
+          if [ "$DRY_RUN" = "true" ]; then args+=(--dry-run); fi
+          if [ "$FORCE" = "true" ]; then args+=(--force); fi
+          python -m ainews "${args[@]}"
+
+      - name: Upload preview
+        if: always() && github.event_name == 'workflow_dispatch' && inputs.dry_run
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview
+          path: out/
+          if-no-files-found: ignore
+          retention-days: 7
+
+      # 실행이 실패해도 그때까지의 기록(runs.json 비용·발송 여부)은 남긴다.
+      - name: Commit state
+        if: always() && steps.state.outcome == 'success'
+        working-directory: state
+        run: |
+          git add -A
+          if git diff --cached --quiet; then
+            echo "state 변경 없음"
+            exit 0
+          fi
+          git -c user.name="github-actions[bot]" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit -q -m "state: run ${GITHUB_RUN_ID}"
+          git push origin HEAD:state

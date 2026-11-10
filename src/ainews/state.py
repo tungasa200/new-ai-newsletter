@@ -56,6 +56,7 @@ class RunRecord(BaseModel):
     finished_at: dt.datetime | None = None
     status: Literal["ok", "skipped", "failed"] = "ok"
     failed_stage: str | None = None
+    error: str | None = None  # 실패한 예외의 종류만(메시지에는 주소가 섞일 수 있다)
     sent: bool = False
     dry_run: bool = False  # 비용은 하루 상한에 넣되 발송 실행과 구분한다
     cost_usd: float = 0.0

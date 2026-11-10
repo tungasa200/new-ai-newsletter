@@ -111,3 +111,19 @@ def test_truncated_output_raises_without_fallback() -> None:
         llm.structured(model="main", system="s", user="u", schema=Out, max_tokens=50)
     assert [c["model"] for c in client.calls] == ["main"]
     assert llm.cost.run_cost > 0  # 잘려도 쓴 비용은 기록한다
+
+
+def test_same_fallback_model_retries_once_on_invalid_output() -> None:
+    client = FakeClient([_resp({"wrong": 1}), _resp({"answer": "again"})])
+    llm = ClaudeLLM(api_key=None, cost=CostTracker(1.0), fallback_model="main", client=client)
+    out = llm.structured(model="main", system="s", user="u", schema=Out, max_tokens=50)
+    assert out.answer == "again"
+    assert [c["model"] for c in client.calls] == ["main", "main"]
+
+
+def test_same_fallback_model_does_not_repeat_server_error() -> None:
+    client = FakeClient([_api_error(), _resp({"answer": "unused"})])
+    llm = ClaudeLLM(api_key=None, cost=CostTracker(1.0), fallback_model="main", client=client)
+    with pytest.raises(anthropic.InternalServerError):
+        llm.structured(model="main", system="s", user="u", schema=Out, max_tokens=50)
+    assert len(client.calls) == 1  # 일시 오류는 SDK가 이미 재시도했다

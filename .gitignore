@@ -4,3 +4,14 @@
 .claude/wy-ops.local.json
 .claude/*.bak-*
 .claude/worktrees/
+
+# Python
+.venv/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+# 실행 산출물·로컬 상태
+out/
+state/

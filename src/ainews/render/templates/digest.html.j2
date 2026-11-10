@@ -1,0 +1,26 @@
+{# stub 템플릿(AN-backend3가 교체). 필드 변경에 덜 묶이도록 title·sources만 쓴다. #}
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8"><title>{{ subject }}</title></head>
+<body style="margin:0;padding:24px;font-family:Arial,Helvetica,sans-serif;color:#222;">
+<h1 style="font-size:22px;">{{ subject }}</h1>
+<p>{{ d.summary }}</p>
+{% for name, kind in [("실무팁", "tip"), ("주요 뉴스", "news")] %}
+{% set entries = d.items | selectattr("kind", "equalto", kind) | list %}
+{% if entries %}
+<h2 style="font-size:18px;">{{ name }}</h2>
+<ul>
+{% for e in entries %}
+  <li><a href="{{ e.sources[0].url }}">{{ e.title }}</a></li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endfor %}
+{% if d.releases %}
+<h2 style="font-size:18px;">도구·릴리스 변경</h2>
+<ul>
+{% for r in d.releases %}
+  <li><a href="{{ r.url }}">{{ r.tool }}</a>: {{ r.one_line }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+</body></html>

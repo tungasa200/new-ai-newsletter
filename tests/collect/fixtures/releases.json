@@ -1,0 +1,9 @@
+[
+  {"tag_name": "v2.1.322", "name": "v2.1.322", "html_url": "https://github.com/acme/tool/releases/tag/v2.1.322",
+   "published_at": "2026-11-10T02:29:43Z", "draft": false, "prerelease": false,
+   "body": "## What's changed\n\n- Added fast mode on Vertex\n"},
+  {"tag_name": "v2.1.323-nightly", "name": "", "html_url": "https://github.com/acme/tool/releases/tag/v2.1.323-nightly",
+   "published_at": "2026-11-10T05:00:00Z", "draft": false, "prerelease": true, "body": "nightly"},
+  {"tag_name": "v2.1.321", "name": null, "html_url": "https://github.com/acme/tool/releases/tag/v2.1.321",
+   "published_at": "2026-11-08T01:00:00Z", "draft": false, "prerelease": false, "body": null}
+]

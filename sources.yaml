@@ -1,0 +1,181 @@
+# 수집 소스 목록(FR-SRC-03, D-08). 근거·수집 허용 판정은 docs/소스후보.md.
+#
+# 필드: name, category(official|community), kind(changelog|release|blog|news|forum),
+#       method(rss|api|html|sitemap|file_diff), url, lookback_hours, max_items, enabled, options
+# lookback_hours를 적으면 직전 실행과 무관하게 그 기간을 본다(발행이 드문 소스는 168 = 7일, FR-SRC-05).
+#
+# options(수집기별):
+#   api: github_releases | hn_algolia       method: api일 때 수집기
+#   parser: dated_sections                  method: html일 때 수집기(`## Month D, YYYY` 구역)
+#   keywords: [..]                          이 단어가 제목·요약에 있는 글만
+#   one_line: true                          요약은 피드 설명 첫 줄(원문 그대로)만, 본문 버림
+#   dates_from_sitemap: URL                 피드 항목에 날짜가 없을 때 이 sitemap의 lastmod를 쓴다
+#   tool: 이름                              GitHub 릴리스 제목 앞에 붙일 도구 이름
+#   path_prefixes: [..]                     sitemap에서 볼 경로
+#   min_points: 50                          HN 최소 점수
+#   body: source | page | none              본문 보강(FR-SEL-08) 방법. 기본 source = 수집 때 받은 본문.
+#                                           page = 원문 페이지(robots 확인), none = 받지 않음(D-12)
+#   usage: release_line                     메일의 '도구·릴리스 변경' 한 줄 목록에만 싣는다(D-12 Cursor)
+#   usage: no_body                          본문을 근거로 해설하지 않는다. 내용은 다른 소스로 채운다(D-12)
+#
+# GitHub 릴리스는 REST API를 쓴다(github.com의 releases.atom은 robots.txt가 막는다).
+# 같은 URL을 여러 소스가 가리키면 먼저 적힌 소스의 항목이 남는다. 공식 소스를 위에 둔다.
+
+sources:
+  # ---- 공식: Anthropic ----
+  - name: Claude Platform release notes
+    category: official
+    kind: changelog
+    method: rss
+    url: https://platform.claude.com/docs/en/release-notes/feed.xml
+    lookback_hours: 168
+
+  - name: Claude Code releases
+    category: official
+    kind: release
+    method: api
+    url: https://api.github.com/repos/anthropics/claude-code/releases
+    lookback_hours: 168
+    options: {api: github_releases, tool: Claude Code}
+
+  # CHANGELOG.md는 releases 본문과 내용이 같고 날짜가 없어 지금은 쓰지 않는다(file_diff 수집기 없음).
+  - name: Claude Code CHANGELOG
+    category: official
+    kind: changelog
+    method: file_diff
+    url: https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md
+    enabled: false
+
+  - name: Anthropic Python SDK releases
+    category: official
+    kind: release
+    method: api
+    url: https://api.github.com/repos/anthropics/anthropic-sdk-python/releases
+    lookback_hours: 168
+    options: {api: github_releases, tool: anthropic-python}
+
+  # D-12: sitemap의 URL·lastmod·slug만. 글 본문 HTML은 받지 않는다.
+  - name: Anthropic News & Engineering
+    category: official
+    kind: news
+    method: sitemap
+    url: https://www.anthropic.com/sitemap.xml
+    max_items: 5
+    options: {path_prefixes: [/news/, /engineering/], body: none, usage: no_body}
+
+  # ---- 공식: OpenAI ----
+  # 약관상 공식 피드만 읽는다. 본문 보강도 피드 안의 내용만 쓴다.
+  - name: OpenAI News
+    category: official
+    kind: news
+    method: rss
+    url: https://openai.com/news/rss.xml
+
+  # API changelog HTML 대신 공식 SDK 릴리스(docs/소스후보.md 5절)
+  - name: OpenAI Python SDK releases
+    category: official
+    kind: release
+    method: api
+    url: https://api.github.com/repos/openai/openai-python/releases
+    lookback_hours: 168
+    options: {api: github_releases, tool: openai-python}
+
+  - name: OpenAI Codex releases
+    category: official
+    kind: release
+    method: api
+    url: https://api.github.com/repos/openai/codex/releases
+    lookback_hours: 168
+    options: {api: github_releases, tool: Codex}
+
+  # ---- 공식: Google ----
+  # JS 앱 페이지지만 <noscript><pre>에 markdown 원문이 있다.
+  - name: Gemini API changelog
+    category: official
+    kind: changelog
+    method: html
+    url: https://aistudio.google.com/docs/changelog
+    lookback_hours: 168
+    options: {parser: dated_sections, label: Gemini API}
+
+  - name: Google GenAI Python SDK releases
+    category: official
+    kind: release
+    method: api
+    url: https://api.github.com/repos/googleapis/python-genai/releases
+    lookback_hours: 168
+    options: {api: github_releases, tool: google-genai}
+
+  - name: Gemini CLI releases
+    category: official
+    kind: release
+    method: api
+    url: https://api.github.com/repos/google-gemini/gemini-cli/releases
+    lookback_hours: 168
+    options: {api: github_releases, tool: Gemini CLI}
+
+  - name: Google Developers Blog
+    category: official
+    kind: blog
+    method: rss
+    url: https://developers.googleblog.com/rss/
+    # 피드 항목에 날짜가 없다(2026-11 확인). 같은 사이트 sitemap의 lastmod로 채운다.
+    # lastmod는 날짜만 있어(그날 0시) 직전 실행 기준이면 늦게 올라온 글을 놓친다. 72시간을 본다.
+    lookback_hours: 72
+    options: {dates_from_sitemap: "https://developers.googleblog.com/sitemap.xml"}
+
+  # ---- 공식: 도구 ----
+  # AI와 무관한 항목이 섞여 있어 키워드로 거른다.
+  - name: GitHub Changelog
+    category: official
+    kind: changelog
+    method: rss
+    url: https://github.blog/changelog/feed/
+    max_items: 15
+    options:
+      keywords: [Copilot, AI, model, models, agent, agents, agentic, MCP, LLM, Claude, GPT, Gemini, Codex]
+
+  # D-12: 제목·한 줄 요약(영어 원문 그대로)·링크만, '도구·릴리스 변경' 칸에만 싣는다.
+  - name: Cursor changelog
+    category: official
+    kind: changelog
+    method: rss
+    url: https://cursor.com/changelog/rss.xml
+    lookback_hours: 168
+    options: {one_line: true, body: none, usage: release_line}
+
+  # ---- 커뮤니티 ----
+  - name: Hacker News
+    category: community
+    kind: forum
+    method: api
+    url: https://hn.algolia.com/api/v1/search
+    max_items: 20
+    options:
+      api: hn_algolia
+      min_points: 50
+      body: page
+      keywords: [AI, LLM, LLMs, GPT, ChatGPT, OpenAI, Anthropic, Claude, Gemini, Codex, Cursor,
+                 Copilot, agent, agents, agentic, MCP, model, models, prompt, prompting, RAG,
+                 embedding, embeddings, inference, fine-tuning, Llama, Mistral, DeepSeek, Qwen]
+
+  - name: Simon Willison
+    category: community
+    kind: blog
+    method: rss
+    url: https://simonwillison.net/atom/everything/
+
+  # Substack 약관: 페이지 크롤링 금지. 피드 본문은 실행 중에만 쓴다.
+  - name: Latent Space
+    category: community
+    kind: blog
+    method: rss
+    url: https://www.latent.space/feed
+
+  # 하루 1회 RSS만. GeekNews 요약문은 옮기지 않는다(본문 보강 안 함).
+  - name: GeekNews
+    category: community
+    kind: forum
+    method: rss
+    url: https://news.hada.io/rss/news
+    options: {body: none}

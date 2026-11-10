@@ -1,0 +1,29 @@
+# 현재 권장 사항 메모
+
+## Anthropic (Claude)
+- 최신 모델: Claude Fable 5.2 (`claude-fable-5-2`). 1M 컨텍스트, 최대 출력 128k, 항상 켜진 적응형 사고, 입력 $8 / 출력 $40 per MTok. Claude Code에서 캐시 읽기는 $0.20/MTok이다.
+- Claude Mythos 5.2 (`claude-mythos-5-2`)는 성능이 같지만 Anthropic 검증 프로그램(예: Cyber Verification Program)을 통과한 조직만 쓸 수 있다.
+- Fable 5.2 fast mode: Messages API 요청에 `speed: "fast"`를 설정한다(베타 헤더 불필요). 출력 속도는 최대 2.5배, 가격은 입력 $16 / 출력 $80 per MTok이다.
+- Claude Platform (베타): Console의 조직 IP 허용 목록(IPv4/IPv6, CIDR, 조직당 최대 1,000개). Admin API로 Enterprise 멤버를 모든 기기에서 로그아웃시킬 수 있다.
+- Claude Code: 최신 v2.1.322. Fable 5.2가 Fable 기본 모델이다. Vertex(global/us/eu)에서 fast mode를 지원하고, Vertex가 거부하면 표준 속도로 돌아간다.
+- Claude Code auto mode: 텔레메트리나 기능 플래그가 꺼져 있으면(LLM 게이트웨이 포함) 서버가 확인하지 못하는 호출은 묻거나 거부한다. 내장 분류기로 폴백하지 않는다. 기존 동작을 유지하려면 `CLAUDE_CODE_AUTO_MODE_SERVER=0`을 설정한다(Bedrock, Vertex, Foundry는 변경 없음).
+- Anthropic Python SDK: 최신 v2.8.0. `claude-fable-5-2`와 `claude-mythos-5-2`는 v2.7.0부터 지원한다.
+- GitHub Copilot: Claude Fable 5.2 정식 출시(GA).
+
+## OpenAI
+- openai-python 최신 v3.49.0 (타입이 지정된 async function tool 추가).
+- GPT-6 Rosalind(`gpt-6-rosalind`): v3.46.0에서 모델 카탈로그에 추가, v3.48.0에서 베타 Responses에서 인식.
+- Responses 12시간 캐싱과 캐시 쓰기 사용량 지원(v3.45.0).
+- Codex CLI: 확인된 최신 버전은 0.167.0 (`codex agents --no-daemon`으로 에이전트 커맨드 센터 열기).
+
+## Google (Gemini)
+- 최신 모델: Gemini 4 Carbon (`gemini-4-carbon`, GA). 2026-11-30까지 소개 가격은 입력 $2.00 / 출력 $10.00 per 1M 토큰이다.
+- Gemini Omni 1.2 Flash (`gemini-omni-1.2-flash`, GA): 최대 15초 영상 생성과 대화형 편집을 지원한다.
+- Gemini 3.8 Flash TTS (`gemini-3.8-flash-tts`): 음성 리믹싱은 `POST /v1beta/voices`로 쓴다.
+- 임베딩: `gemini-embedding-2`를 쓴다.
+- google-genai Python SDK v3.0.0: Gemini Developer API 기본 버전이 `v1`이다(기존 `v1beta`). Vertex AI 기본값은 영향이 없다.
+- Gemini CLI: 확인된 최신 버전은 v0.67.0.
+
+## 대체된 기법
+- `gemini-embedding-2-preview`(지원 중단, 2026-11-06부터 `gemini-embedding-2`로 라우팅) → 모델 문자열을 `gemini-embedding-2`로 바꾼다.
+- google-genai 2.x의 기본 `v1beta` → 3.0.0부터 기본 `v1`이므로, `v1beta` 전용 기능은 API 버전을 명시한다.

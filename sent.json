@@ -1,0 +1,145 @@
+{
+ "version": 1,
+ "deliveries": [
+  {
+   "date": "2026-11-11",
+   "sent_at": "2026-11-10T17:07:14.920071Z",
+   "run_id": "20261110T170714Z-ee2a66",
+   "count": 18
+  }
+ ],
+ "entries": [
+  {
+   "url": "https://platform.claude.com/docs/en/release-notes/overview#claude-fable-5-2",
+   "event_key": "anthropic-claude-fable-5-2-release",
+   "title_hash": "896b01c038be",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://anthropic.com/claude-fable-and-mythos-5-2",
+   "event_key": "anthropic-claude-fable-5-2-release",
+   "title_hash": "896b01c038be",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://latent.space/p/ainews-fable-5-2-retakes-world-1-llm-spot-as-ant-ipo-roadshow-begins",
+   "event_key": "anthropic-claude-fable-5-2-release",
+   "title_hash": "896b01c038be",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://simonwillison.net/2026/Nov/9/llm-anthropic",
+   "event_key": "anthropic-claude-fable-5-2-release",
+   "title_hash": "896b01c038be",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://aistudio.google.com/docs/changelog#11-10-2026",
+   "event_key": "google-gemini-4-carbon-ga",
+   "title_hash": "e6afcfece49b",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available",
+   "event_key": "google-gemini-4-carbon-ga",
+   "title_hash": "e6afcfece49b",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.321",
+   "event_key": "anthropic-claude-code-v2.1.321-fable-5-2-default",
+   "title_hash": "0587c5e2d410",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://github.com/googleapis/python-genai/releases/tag/v3.0.0",
+   "event_key": "google-genai-python-v3.0.0-default-api-version",
+   "title_hash": "bcaa4a672ab5",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://platform.claude.com/docs/en/release-notes/overview#fast-mode-claude-fable-5-2",
+   "event_key": "https://platform.claude.com/docs/en/release-notes/overview#fast-mode-claude-fable-5-2",
+   "title_hash": "7682f6085f0c",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://platform.claude.com/docs/en/release-notes/overview#ip-allowlisting",
+   "event_key": "https://platform.claude.com/docs/en/release-notes/overview#ip-allowlisting",
+   "title_hash": "1333a0453f5c",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://platform.claude.com/docs/en/release-notes/overview#admin-api-sign-out",
+   "event_key": "https://platform.claude.com/docs/en/release-notes/overview#admin-api-sign-out",
+   "title_hash": "a108d85ee940",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.322",
+   "event_key": "https://github.com/anthropics/claude-code/releases/tag/v2.1.322",
+   "title_hash": "806aff0d2734",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.319",
+   "event_key": "https://github.com/anthropics/claude-code/releases/tag/v2.1.319",
+   "title_hash": "93563a1d4a66",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.7.0",
+   "event_key": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.7.0",
+   "title_hash": "37e1f51c99fc",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-09-claude-fable-5-2-in-github-copilot",
+   "event_key": "https://github.blog/changelog/2026-11-09-claude-fable-5-2-in-github-copilot",
+   "title_hash": "6971192d0472",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://github.com/openai/openai-python/releases/tag/v3.49.0",
+   "event_key": "https://github.com/openai/openai-python/releases/tag/v3.49.0",
+   "title_hash": "ad5b2f4cc2c1",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://github.com/openai/codex/releases/tag/rust-v0.167.0",
+   "event_key": "https://github.com/openai/codex/releases/tag/rust-v0.167.0",
+   "title_hash": "b3a6bbfe078d",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://aistudio.google.com/docs/changelog#11-06-2026",
+   "event_key": "https://aistudio.google.com/docs/changelog#11-06-2026",
+   "title_hash": "9cb0ea6fe8e6",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://aistudio.google.com/docs/changelog#11-05-2026",
+   "event_key": "https://aistudio.google.com/docs/changelog#11-05-2026",
+   "title_hash": "e6c003b38983",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://aistudio.google.com/docs/changelog#11-04-2026",
+   "event_key": "https://aistudio.google.com/docs/changelog#11-04-2026",
+   "title_hash": "c530b1c202bd",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://cursor.com/changelog/voice-chat",
+   "event_key": "https://cursor.com/changelog/voice-chat",
+   "title_hash": "90140d32f4c4",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://cursor.com/changelog/build-live-apps",
+   "event_key": "https://cursor.com/changelog/build-live-apps",
+   "title_hash": "23974bfa7254",
+   "sent_on": "2026-11-11"
+  }
+ ]
+}

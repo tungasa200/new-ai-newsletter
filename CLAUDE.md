@@ -49,7 +49,11 @@
 - 보고 형식: `[완료]` 작업·바뀐 파일·실행한 검증 명령과 결과 / `[결정 요청]` 배경·선택지와 트레이드오프·추천안·막히는 작업 / `[차단]` 멈춘 이유·필요한 것.
 - 배정받은 디렉터리 밖은 수정하지 않는다.
 - 완료 보고 전에 바뀐 부분에 맞는 검증을 돌리고, 실행한 명령과 결과(통과·실패·못 돌린 이유)를 적는다. 검증 명령(`.claude/wy-ops.json`의 `verify`):
-  - (아직 정하지 않았다. `.claude/wy-ops.json`의 `verify`에 setup·build·test·typecheck·lint·format 명령을 적는다)
+  - 준비: `py -3.12 -m venv .venv && .venv/Scripts/python -m pip install -e ".[dev]"`
+  - 테스트: `.venv/Scripts/python -m pytest -q`
+  - 타입 검사: `.venv/Scripts/python -m mypy src`
+  - 린트: `.venv/Scripts/python -m ruff check .`
+  - 형식 검사: `.venv/Scripts/python -m ruff format --check .`
 - 무거운 작업(빌드, 개발 서버, 전체 테스트, 브라우저 자동화) 전에는 여유 메모리를 확인하고, `.claude/wy-ops.json`의 `memory.blockFreeMB`(지금 500MB) 미만이면 시작하지 말고 `AN-pm`에 알린다. 끝나면 실행한 서버·브라우저를 바로 끈다.
 - 사용자 손이 필요한 일(외부 콘솔, 설정 수정, 리로드, 명령 실행, 결정)은 대화창이 아니라 승인 센터 카드로 올린다. 세션은 설정 파일(`wy-ops.json`, `wy-ops.local.json`, `settings.local.json`)을 직접 고치지 않는다.
 

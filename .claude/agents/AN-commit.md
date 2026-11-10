@@ -16,7 +16,11 @@ disallowedTools: Artifact, Workflow, AskUserQuestion, ReportFindings, EnterWorkt
 
 ## 검증 명령
 바뀐 부분에 맞는 것을 골라 돌리고, 실행한 명령과 결과를 보고에 적는다(설정: `.claude/wy-ops.json`의 `verify`).
-- (아직 정하지 않았다. `.claude/wy-ops.json`의 `verify`에 setup·build·test·typecheck·lint·format 명령을 적는다)
+- 준비(처음 한 번·의존성 바뀔 때): `py -3.12 -m venv .venv && .venv/Scripts/python -m pip install -e ".[dev]"`
+- 테스트: `.venv/Scripts/python -m pytest -q`
+- 타입 검사: `.venv/Scripts/python -m mypy src`
+- 린트: `.venv/Scripts/python -m ruff check .`
+- 형식 검사: `.venv/Scripts/python -m ruff format --check .`
 
 ## 모든 역할 공통
 - 규칙의 원본은 저장소 `CLAUDE.md`다. 시작할 때 `CLAUDE.md`와 `docs/진행현황.md`(특히 "역할별 다음 할 일"의 내 줄)를 읽는다. 첫 지시에 "멈춰 있는 동안 끝난 일"이 있으면 그것을 기준으로 상태를 맞춘다.

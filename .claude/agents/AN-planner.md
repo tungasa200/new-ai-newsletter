@@ -14,7 +14,11 @@ disallowedTools: Artifact, Workflow, AskUserQuestion, ReportFindings, EnterWorkt
 
 ## 검증 명령
 바뀐 부분에 맞는 것을 골라 돌리고, 실행한 명령과 결과를 보고에 적는다(설정: `.claude/wy-ops.json`의 `verify`).
-- (아직 정하지 않았다. `.claude/wy-ops.json`의 `verify`에 setup·build·test·typecheck·lint·format 명령을 적는다)
+- 준비(처음 한 번·의존성 바뀔 때): `py -3.12 -m venv .venv && .venv/Scripts/python -m pip install -e ".[dev]"`
+- 테스트: `.venv/Scripts/python -m pytest -q`
+- 타입 검사: `.venv/Scripts/python -m mypy src`
+- 린트: `.venv/Scripts/python -m ruff check .`
+- 형식 검사: `.venv/Scripts/python -m ruff format --check .`
 
 ## 스킬 쓰는 때
 - docx·xlsx 문서를 만들거나 고칠 때 스킬 목록에 `anthropic-skills:docx`·`anthropic-skills:xlsx`가 있으면 불러 쓰고, 없으면 직접 만든다.

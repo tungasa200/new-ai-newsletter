@@ -9,7 +9,7 @@ import pytest
 from pydantic import BaseModel
 
 from ainews.util.cost import BudgetExceeded, CostTracker
-from ainews.util.llm import ClaudeLLM, LLMError
+from ainews.util.llm import ClaudeLLM, LLMError, LLMTruncatedError
 
 
 class Out(BaseModel):
@@ -100,3 +100,14 @@ def test_client_error_does_not_fall_back() -> None:
     with pytest.raises(anthropic.AuthenticationError):
         _llm(client).structured(model="main", system="s", user="u", schema=Out, max_tokens=50)
     assert [c["model"] for c in client.calls] == ["main"]
+
+
+def test_truncated_output_raises_without_fallback() -> None:
+    cut = _resp({"answer": "partial"})
+    cut.stop_reason = "max_tokens"
+    client = FakeClient([cut, _resp({"answer": "unused"})])
+    llm = _llm(client)
+    with pytest.raises(LLMTruncatedError):
+        llm.structured(model="main", system="s", user="u", schema=Out, max_tokens=50)
+    assert [c["model"] for c in client.calls] == ["main"]
+    assert llm.cost.run_cost > 0  # 잘려도 쓴 비용은 기록한다

@@ -62,6 +62,7 @@ class RunRecord(BaseModel):
     cost_usd: float = 0.0
     tokens: dict[str, int] = Field(default_factory=dict)
     source_stats: list[SourceStat] = Field(default_factory=list)
+    warnings: list[str] = Field(default_factory=list)  # 실행은 성공했지만 운영자가 볼 일
 
 
 class RunsFile(BaseModel):

@@ -1,26 +1,102 @@
-{# stub 템플릿(AN-backend3가 교체). 필드 변경에 덜 묶이도록 title·sources만 쓴다. #}
+{#- 메일 클라이언트 호환: 표 레이아웃, 인라인 스타일만, 외부 CSS·이미지·스크립트 없음. -#}
+{%- set font = "-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',Arial,sans-serif" -%}
+{%- set p = "margin:0 0 12px 0;font-size:15px;line-height:1.7;color:#222222;" -%}
+{%- set h2 = "padding-bottom:6px;border-bottom:2px solid #111111;font-size:18px;color:#111111;" -%}
+{%- set list = "margin:0 0 12px 0;padding-left:22px;font-size:15px;line-height:1.7;color:#222222;" -%}
+{%- set h3 = "margin:16px 0 6px 0;font-size:14px;font-weight:bold;color:#444444;" -%}
 <!DOCTYPE html>
-<html lang="ko"><head><meta charset="utf-8"><title>{{ subject }}</title></head>
-<body style="margin:0;padding:24px;font-family:Arial,Helvetica,sans-serif;color:#222;">
-<h1 style="font-size:22px;">{{ subject }}</h1>
-<p>{{ d.summary }}</p>
-{% for name, kind in [("실무팁", "tip"), ("주요 뉴스", "news")] %}
-{% set entries = d.items | selectattr("kind", "equalto", kind) | list %}
-{% if entries %}
-<h2 style="font-size:18px;">{{ name }}</h2>
-<ul>
-{% for e in entries %}
-  <li><a href="{{ e.sources[0].url }}">{{ e.title }}</a></li>
-{% endfor %}
-</ul>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ subject }}</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f4f5;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4f4f5;">
+<tr><td align="center" style="padding:24px 12px;">
+<table role="presentation" width="640" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:640px;background:#ffffff;border:1px solid #e4e4e7;font-family:{{ font }};">
+<tr><td style="padding:24px 28px 8px 28px;">
+  <h1 style="margin:0 0 4px 0;font-size:22px;line-height:1.4;color:#111111;">AI 실무 소식</h1>
+  <p style="margin:0 0 16px 0;font-size:13px;color:#71717a;">{{ d.date.strftime("%Y.%m.%d") }}</p>
+  <p style="{{ p }}">{{ d.summary }}</p>
+</td></tr>
+
+<tr><td style="padding:8px 28px 0 28px;">
+  <h2 style="margin:8px 0 12px 0;{{ h2 }}">오늘의 핵심</h2>
+{% if not d.items %}
+  <p style="{{ p }}color:#52525b;">{{ empty_items }}</p>
 {% endif %}
+</td></tr>
+{% for e in d.items %}
+<tr><td style="padding:12px 28px 20px 28px;{% if not loop.last %}border-bottom:1px solid #e4e4e7;{% endif %}">
+  <p style="margin:0 0 6px 0;font-size:12px;color:#52525b;">
+    <span style="display:inline-block;padding:2px 8px;background:{% if e.kind == 'tip' %}#dcfce7;color:#166534{% else %}#e0e7ff;color:#3730a3{% endif %};font-weight:bold;">{{ kind_label[e.kind] }}</span>
+{% if e.is_update %}
+    <span style="display:inline-block;padding:2px 8px;background:#fef3c7;color:#92400e;font-weight:bold;">업데이트</span>
+{% endif %}
+    <span style="display:inline-block;padding:2px 8px;{% if e.freshness == 'caution' %}background:#fee2e2;color:#991b1b;{% else %}background:#f4f4f5;color:#3f3f46;{% endif %}">신선도: {{ freshness_label[e.freshness] }}</span>
+  </p>
+  <h3 style="margin:6px 0 12px 0;font-size:19px;line-height:1.45;color:#111111;"><a href="{{ e.sources[0].url }}" style="color:#111111;text-decoration:none;">{{ e.title }}</a></h3>
+  <p style="{{ h3 }}">배경</p>
+  <p style="{{ p }}">{{ e.background }}</p>
+  <p style="{{ h3 }}">핵심 내용</p>
+{% for para in e.details %}
+  <p style="{{ p }}">{{ para }}</p>
 {% endfor %}
+  <p style="{{ h3 }}">실무 적용</p>
+  <p style="{{ p }}">{{ e.how_to_apply }}</p>
+{% if e.kind == "tip" %}
+{% if e.applies_to %}
+  <p style="{{ p }}"><strong>적용 대상:</strong> {{ e.applies_to }}</p>
+{% endif %}
+{% if e.steps %}
+  <p style="{{ h3 }}">바로 해 볼 것</p>
+  <ol style="{{ list }}">
+{% for s in e.steps %}
+    <li style="margin:0 0 4px 0;">{{ s }}</li>
+{% endfor %}
+  </ol>
+{% endif %}
+{% for b in e.code_blocks %}
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 12px 0;"><tr><td style="background:#18181b;padding:12px 14px;">
+{% if b.lang %}<p style="margin:0 0 6px 0;font-size:11px;color:#a1a1aa;font-family:Consolas,Menlo,monospace;">{{ b.lang }}</p>{% endif %}
+<pre style="margin:0;white-space:pre-wrap;word-break:break-all;font-size:13px;line-height:1.5;color:#f4f4f5;font-family:Consolas,Menlo,'Courier New',monospace;">{{ b.code }}</pre>
+  </td></tr></table>
+{% endfor %}
+{% endif %}
+{% if e.caveats %}
+  <p style="{{ h3 }}">주의점·한계</p>
+  <ul style="{{ list }}">
+{% for c in e.caveats %}
+    <li style="margin:0 0 4px 0;">{{ c }}</li>
+{% endfor %}
+  </ul>
+{% endif %}
+  <p style="margin:12px 0 0 0;font-size:13px;line-height:1.6;color:#52525b;">출처:
+{% for s in e.sources %}
+    <a href="{{ s.url }}" style="color:#2563eb;">{{ s.title }}</a> ({{ source_label[s.kind] }}){% if not loop.last %} · {% endif %}
+
+{% endfor %}
+  </p>
+</td></tr>
+{% endfor %}
+
 {% if d.releases %}
-<h2 style="font-size:18px;">도구·릴리스 변경</h2>
-<ul>
+<tr><td style="padding:8px 28px 20px 28px;">
+  <h2 style="margin:16px 0 12px 0;{{ h2 }}">도구·릴리스 변경</h2>
+  <ul style="margin:0;padding-left:20px;font-size:14px;line-height:1.7;color:#222222;">
 {% for r in d.releases %}
-  <li><a href="{{ r.url }}">{{ r.tool }}</a>: {{ r.one_line }}</li>
+    <li style="margin:0 0 6px 0;"><strong>{{ r.tool }}{% if r.version %} {{ r.version }}{% endif %}</strong>: {{ r.one_line }} <a href="{{ r.url }}" style="color:#2563eb;">링크</a></li>
 {% endfor %}
-</ul>
+  </ul>
+</td></tr>
 {% endif %}
-</body></html>
+
+<tr><td style="padding:16px 28px 24px 28px;border-top:1px solid #e4e4e7;">
+  <p style="margin:0;font-size:12px;line-height:1.6;color:#a1a1aa;">Claude가 공식 소스와 커뮤니티 글을 골라 편집한 메일입니다. 사실 확인은 출처 링크를 기준으로 해 주세요.</p>
+</td></tr>
+</table>
+</td></tr>
+</table>
+</body>
+</html>

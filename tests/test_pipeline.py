@@ -10,6 +10,7 @@ from ainews.fake import FakeLLM, fake_collect, fake_enrich_bodies
 from ainews.models import KnowledgeUpdate, RenderedMail
 from ainews.pipeline import RunOptions, RunResult, Stages, run
 from ainews.settings import Settings
+from ainews.util.llm import LLMTruncatedError
 
 
 def _sending_stages(outbox: list[RenderedMail]) -> Stages:
@@ -125,3 +126,14 @@ def test_cli_offline_dry_run(monkeypatch, tmp_path) -> None:  # type: ignore[no-
     monkeypatch.setenv("AINEWS_STATE_DIR", str(tmp_path / "state"))
     assert main(["--dry-run", "--offline"]) == 0
     assert list((tmp_path / "out").glob("preview-*.html"))
+
+
+def test_knowledge_truncation_is_recorded_as_warning(settings: Settings, now: dt.datetime) -> None:
+    def truncated(*a: object) -> None:
+        raise LLMTruncatedError("cut")
+
+    stages = _sending_stages([])
+    stages.update_knowledge = truncated  # type: ignore[assignment]
+    assert _run(settings, RunOptions(), stages, now).status == "ok"
+    [rec] = st.StateStore(settings.state_dir).load_runs().runs
+    assert rec.warnings == ["권장 사항 메모 갱신 실패: 출력이 max_tokens에서 잘림"]

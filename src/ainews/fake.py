@@ -11,6 +11,7 @@ from typing import Any
 
 from pydantic import BaseModel
 
+from ainews import edit, judge
 from ainews.context import RunContext
 from ainews.models import CollectResult, Item, SourceConfig, SourceStat
 
@@ -80,11 +81,23 @@ def fake_enrich_bodies(items: list[Item], ctx: RunContext) -> list[Item]:
     return [i.model_copy(update={"body": f"(가짜 본문) {i.title}"}) for i in items]
 
 
+def default_handlers() -> dict[type[BaseModel], Callable[[str], Any]]:
+    """단계별 가짜 응답(--offline 기본값). 각 단계 담당 세션이 자기 모듈에 정의한다."""
+    return {
+        judge.ClassifyOutput: judge.fake_classify,
+        edit.EditOutput: edit.fake_edit,
+        edit.KnowledgeOutput: edit.fake_knowledge,
+    }
+
+
 class FakeLLM:
-    """스키마별로 등록한 함수가 응답을 만든다. 등록하지 않은 스키마를 부르면 실패한다."""
+    """스키마별로 등록한 함수가 응답을 만든다. 등록하지 않은 스키마를 부르면 실패한다.
+
+    handlers를 주지 않으면 default_handlers()를 쓴다.
+    """
 
     def __init__(self, handlers: dict[type[BaseModel], Callable[[str], Any]] | None = None) -> None:
-        self.handlers = dict(handlers or {})
+        self.handlers = default_handlers() if handlers is None else dict(handlers)
         self.calls: list[tuple[str, type[BaseModel]]] = []
 
     def structured[M: BaseModel](

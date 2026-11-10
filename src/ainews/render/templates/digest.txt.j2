@@ -1,22 +1,67 @@
-{# stub 템플릿(AN-backend3가 교체). #}
-{{ subject }}
+AI 실무 소식 — {{ d.date.strftime("%Y.%m.%d") }}
 
 {{ d.summary }}
-{% for name, kind in [("실무팁", "tip"), ("주요 뉴스", "news")] %}
-{% set entries = d.items | selectattr("kind", "equalto", kind) | list %}
-{% if entries %}
 
-[{{ name }}]
-{% for e in entries %}
-- {{ e.title }}
-  {{ e.sources[0].url }}
+== 오늘의 핵심 ==
+{% if not d.items %}
+
+{{ empty_items }}
+{% endif %}
+{% for e in d.items %}
+
+[{{ loop.index }}] {{ e.title }}
+({{ kind_label[e.kind] }}{% if e.is_update %} · 업데이트{% endif %} · 신선도: {{ freshness_label[e.freshness] }})
+
+배경
+{{ e.background }}
+
+핵심 내용
+{% for para in e.details %}
+{{ para }}
+{% if not loop.last %}
+
+{% endif %}
+{% endfor %}
+
+실무 적용
+{{ e.how_to_apply }}
+{% if e.kind == "tip" %}
+{% if e.applies_to %}
+
+적용 대상: {{ e.applies_to }}
+{% endif %}
+{% if e.steps %}
+
+바로 해 볼 것
+{% for s in e.steps %}
+{{ loop.index }}. {{ s }}
 {% endfor %}
 {% endif %}
+{% for b in e.code_blocks %}
+
+```{{ b.lang }}
+{{ b.code }}
+```
+{% endfor %}
+{% endif %}
+{% if e.caveats %}
+
+주의점·한계
+{% for c in e.caveats %}
+- {{ c }}
+{% endfor %}
+{% endif %}
+
+출처
+{% for s in e.sources %}
+- {{ s.title }} ({{ source_label[s.kind] }}) {{ s.url }}
+{% endfor %}
 {% endfor %}
 {% if d.releases %}
 
-[도구·릴리스 변경]
+== 도구·릴리스 변경 ==
 {% for r in d.releases %}
-- {{ r.tool }}: {{ r.one_line }} {{ r.url }}
+- {{ r.tool }}{% if r.version %} {{ r.version }}{% endif %}: {{ r.one_line }}
+  {{ r.url }}
 {% endfor %}
 {% endif %}

@@ -6,6 +6,12 @@
    "sent_at": "2026-11-10T17:07:14.920071Z",
    "run_id": "20261110T170714Z-ee2a66",
    "count": 18
+  },
+  {
+   "date": "2026-11-11",
+   "sent_at": "2026-11-10T17:20:47.400639Z",
+   "run_id": "20261110T172047Z-5a4b59",
+   "count": 8
   }
  ],
  "entries": [
@@ -139,6 +145,54 @@
    "url": "https://cursor.com/changelog/build-live-apps",
    "event_key": "https://cursor.com/changelog/build-live-apps",
    "title_hash": "23974bfa7254",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.318",
+   "event_key": "https://github.com/anthropics/claude-code/releases/tag/v2.1.318",
+   "title_hash": "635449e81d62",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.8.0",
+   "event_key": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.8.0",
+   "title_hash": "18f38f2e5609",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.6.0",
+   "event_key": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.6.0",
+   "title_hash": "6f6199b7cc88",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.5.0",
+   "event_key": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.5.0",
+   "title_hash": "3fbf794e7f84",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://github.com/openai/openai-python/releases/tag/v3.48.0",
+   "event_key": "https://github.com/openai/openai-python/releases/tag/v3.48.0",
+   "title_hash": "6c8ccda03f75",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://github.com/openai/openai-python/releases/tag/v3.46.0",
+   "event_key": "https://github.com/openai/openai-python/releases/tag/v3.46.0",
+   "title_hash": "bc1b7f6345ed",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://github.com/openai/openai-python/releases/tag/v3.45.0",
+   "event_key": "https://github.com/openai/openai-python/releases/tag/v3.45.0",
+   "title_hash": "2d10792df185",
+   "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://github.com/openai/openai-python/releases/tag/v3.44.0",
+   "event_key": "https://github.com/openai/openai-python/releases/tag/v3.44.0",
+   "title_hash": "7b5cf19aa755",
    "sent_on": "2026-11-11"
   }
  ]

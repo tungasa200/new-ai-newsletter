@@ -40,7 +40,7 @@ AI 모델과 개발 도구를 매일 쓰는 실무자다. 주어진 항목마다
 - relevant: AI 모델·AI 개발 도구·AI 실무와 관련 있으면 true.
 - type: release(모델·도구 출시), feature_change(기존 기능·API·가격·한도·지원 종료 변경),
   tip(실무팁), research(연구), industry(업계 동향), policy(정책·규제). 이 6개 값만 쓴다.
-  항목의 category(official·community)는 출처 범주이지 type이 아니다.
+  항목의 official(공식 출처 여부)은 출처 정보일 뿐 type과 관계없다.
   tip은 다음을 모두 만족할 때만 쓴다: ① 따라 할 구체적 행동(설정값·명령·프롬프트·코드·워크플로
   단계)이 있다 ② 대상 도구·모델·버전이 명시되거나 추정된다 ③ 현재 버전에서 유효해 보인다
   ④ 효과나 이유가 설명되어 있다. 하나라도 빠지면 tip이 아니다.
@@ -99,7 +99,7 @@ def _item_payload(idx: int, item: Item) -> dict[str, Any]:
     d: dict[str, Any] = {
         "idx": idx,
         "source": item.source,
-        "category": item.category,
+        "official": item.category == "official",
         "kind": item.kind,
         "title": item.title,
         "url": item.url,
@@ -239,7 +239,7 @@ def fake_classify(user: str) -> dict[str, Any]:
     rows = json.loads(untag("items", user) or "[]")
     out = []
     for r in rows:
-        official = r["category"] == "official"
+        official = r["official"]
         if r["kind"] in ("changelog", "release"):
             kind = "release"
         else:

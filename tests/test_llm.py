@@ -127,3 +127,51 @@ def test_same_fallback_model_does_not_repeat_server_error() -> None:
     with pytest.raises(anthropic.InternalServerError):
         llm.structured(model="main", system="s", user="u", schema=Out, max_tokens=50)
     assert len(client.calls) == 1  # 일시 오류는 SDK가 이미 재시도했다
+
+
+def _text_resp(text: str, stop: str = "end_turn") -> SimpleNamespace:
+    resp = _resp({})
+    resp.content = [SimpleNamespace(type="text", text=text)]
+    resp.stop_reason = stop
+    return resp
+
+
+def _forced_tool_rejected() -> anthropic.BadRequestError:
+    req = httpx.Request("POST", "https://api.example.invalid")
+    msg = 'tool_choice: type "tool" and "any" are not supported for this model.'
+    return anthropic.BadRequestError(msg, response=httpx.Response(400, request=req), body=None)
+
+
+def test_model_rejecting_forced_tool_switches_to_json_output() -> None:
+    """Actions 두 번째 실행: Sonnet 5.5가 강제 tool_choice를 400으로 거절했다."""
+    client = FakeClient(
+        [_forced_tool_rejected(), _text_resp('{"answer": "a"}'), _text_resp('{"answer": "b"}')]
+    )
+    llm = _llm(client)
+    first = llm.structured(model="main", system="s", user="u", schema=Out, max_tokens=50)
+    second = llm.structured(model="main", system="s", user="u", schema=Out, max_tokens=50)
+    assert (first.answer, second.answer) == ("a", "b")
+    assert "tool_choice" in client.calls[0]
+    for call in client.calls[1:]:  # 그 뒤로는 그 모델에 구조화 출력만 쓴다
+        assert "tool_choice" not in call and "tools" not in call
+        fmt = call["output_config"]["format"]
+        assert fmt["type"] == "json_schema"
+        assert fmt["schema"]["additionalProperties"] is False
+
+
+def test_json_output_refusal_falls_back() -> None:
+    client = FakeClient(
+        [_forced_tool_rejected(), _text_resp("no", stop="refusal"), _resp({"answer": "cheap"})]
+    )
+    out = _llm(client).structured(model="main", system="s", user="u", schema=Out, max_tokens=50)
+    assert out.answer == "cheap"
+    assert [c["model"] for c in client.calls] == ["main", "main", "cheap"]
+
+
+def test_other_bad_request_is_not_retried() -> None:
+    req = httpx.Request("POST", "https://api.example.invalid")
+    bad = anthropic.BadRequestError("bad", response=httpx.Response(400, request=req), body=None)
+    client = FakeClient([bad, _resp({"answer": "unused"})])
+    with pytest.raises(anthropic.BadRequestError):
+        _llm(client).structured(model="main", system="s", user="u", schema=Out, max_tokens=50)
+    assert len(client.calls) == 1

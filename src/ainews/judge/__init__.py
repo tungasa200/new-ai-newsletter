@@ -8,15 +8,25 @@ select는 Claude를 부르지 않고 게재 기준(FR-SEL-06)으로 후보를 �
 from __future__ import annotations
 
 import json
+import logging
 import re
-from typing import Any
+from typing import Any, get_args
 
-from pydantic import BaseModel, Field
+from pydantic import (
+    BaseModel,
+    Field,
+    ValidationError,
+    ValidatorFunctionWrapHandler,
+    field_validator,
+)
 
 from ainews.context import RunContext
 from ainews.models import Candidate, DeepItem, Item, ItemType, Judgment
 from ainews.state import SentIndex
 
+log = logging.getLogger(__name__)
+
+FALLBACK_TYPE: ItemType = "industry"  # 목록 밖 유형을 받을 때(tip 기준을 우회하지 않는 값)
 BATCH_SIZE = 50  # D-05: 항목이 많으면 50건씩 나눠 호출
 CLASSIFY_MAX_TOKENS = 6000  # 50건 × 약 60토큰 + 여유
 SUMMARY_CHARS = 800  # 항목당 발췌(약 300토큰, D-05)
@@ -29,7 +39,8 @@ AI 모델과 개발 도구를 매일 쓰는 실무자다. 주어진 항목마다
 
 - relevant: AI 모델·AI 개발 도구·AI 실무와 관련 있으면 true.
 - type: release(모델·도구 출시), feature_change(기존 기능·API·가격·한도·지원 종료 변경),
-  tip(실무팁), research(연구), industry(업계 동향), policy(정책·규제).
+  tip(실무팁), research(연구), industry(업계 동향), policy(정책·규제). 이 6개 값만 쓴다.
+  항목의 category(official·community)는 출처 범주이지 type이 아니다.
   tip은 다음을 모두 만족할 때만 쓴다: ① 따라 할 구체적 행동(설정값·명령·프롬프트·코드·워크플로
   단계)이 있다 ② 대상 도구·모델·버전이 명시되거나 추정된다 ③ 현재 버전에서 유효해 보인다
   ④ 효과나 이유가 설명되어 있다. 하나라도 빠지면 tip이 아니다.
@@ -54,11 +65,34 @@ class _Judged(BaseModel):
     practicality: int = Field(ge=1, le=5)
     event_key: str
 
+    @field_validator("type", mode="before")
+    @classmethod
+    def _known_type(cls, v: Any) -> Any:
+        """목록 밖 유형(예: 출처 범주 'community')은 중립 값으로 바꾼다. 묶음 전체를 잃지 않게."""
+        if v not in get_args(ItemType):
+            log.warning("분류 응답의 목록 밖 유형 %r → %s", v, FALLBACK_TYPE)
+            return FALLBACK_TYPE
+        return v
+
 
 class ClassifyOutput(BaseModel):
     """classify의 tool 입력 스키마."""
 
     judgments: list[_Judged]
+
+    @field_validator("judgments", mode="wrap")
+    @classmethod
+    def _drop_invalid(cls, v: Any, handler: ValidatorFunctionWrapHandler) -> list[_Judged]:
+        """검증에 실패한 항목만 버린다(그 항목은 응답에서 빠진 것으로 처리된다)."""
+        if not isinstance(v, list):
+            return handler(v)
+        ok = []
+        for raw in v:
+            try:
+                ok.append(_Judged.model_validate(raw))
+            except ValidationError as exc:
+                log.warning("분류 응답 항목 1건을 버린다: %s", exc.errors()[0]["msg"])
+        return ok
 
 
 def _item_payload(idx: int, item: Item) -> dict[str, Any]:
@@ -100,25 +134,24 @@ def _user_prompt(batch: list[Item], known: dict[str, str]) -> str:
 def classify(items: list[Item], ctx: RunContext) -> list[Judgment]:
     """1단계(Haiku): 항목마다 관련성·유형·중요도·적용성·사건 키를 매긴다.
 
-    응답에 빠진 항목은 판정 없음(=게재 후보 아님)으로 둔다.
+    응답에 빠진 항목은 그 항목만 1회 다시 묻고, 그래도 없으면 판정 없음(=게재 후보 아님)으로 둔다.
     """
     judgments: list[Judgment] = []
     known: dict[str, str] = {}  # 앞 묶음에서 나온 사건 키 → 대표 제목(묶음 사이 사건 키 맞추기)
     for start in range(0, len(items), BATCH_SIZE):
         batch = items[start : start + BATCH_SIZE]
-        out = ctx.llm.structured(
-            model=ctx.settings.model_classify,
-            system=SYSTEM,
-            user=_user_prompt(batch, known),
-            schema=ClassifyOutput,
-            max_tokens=CLASSIFY_MAX_TOKENS,
-        )
-        seen: set[int] = set()
-        for j in out.judgments:
-            if not 0 <= j.idx < len(batch) or j.idx in seen:
+        got = {batch[n].id: j for n, j in _ask(batch, known, ctx).items()}
+        missing = [i for i in batch if i.id not in got]
+        if missing:
+            ctx.log.warning(
+                "분류 응답에서 %d/%d건이 빠져 그 항목만 다시 묻는다", len(missing), len(batch)
+            )
+            got |= {missing[n].id: j for n, j in _ask(missing, known, ctx).items()}
+            if left := len(batch) - len(got):
+                ctx.log.warning("분류 응답에서 %d건이 끝내 빠졌다(후보에서 제외)", left)
+        for item in batch:
+            if (j := got.get(item.id)) is None:
                 continue
-            seen.add(j.idx)
-            item = batch[j.idx]
             key = j.event_key.strip().lower() or item.id
             judgments.append(
                 Judgment(
@@ -132,9 +165,23 @@ def classify(items: list[Item], ctx: RunContext) -> list[Judgment]:
             )
             if j.relevant:
                 known.setdefault(key, item.title)
-        if len(seen) < len(batch):
-            ctx.log.warning("분류 응답에서 %d건이 빠졌다(후보에서 제외)", len(batch) - len(seen))
     return judgments
+
+
+def _ask(batch: list[Item], known: dict[str, str], ctx: RunContext) -> dict[int, _Judged]:
+    """묶음 하나를 분류한다. 범위 밖·중복 idx는 버린다(먼저 온 것을 쓴다)."""
+    out = ctx.llm.structured(
+        model=ctx.settings.model_classify,
+        system=SYSTEM,
+        user=_user_prompt(batch, known),
+        schema=ClassifyOutput,
+        max_tokens=CLASSIFY_MAX_TOKENS,
+    )
+    got: dict[int, _Judged] = {}
+    for j in out.judgments:
+        if 0 <= j.idx < len(batch):
+            got.setdefault(j.idx, j)
+    return got
 
 
 def passes(j: Judgment, ctx: RunContext) -> bool:

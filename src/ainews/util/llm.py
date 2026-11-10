@@ -3,6 +3,7 @@
 - 출력은 tool use를 강제해 받고 pydantic 모델로 검증한다.
 - 일시 오류(429·5xx·시간 초과·연결) 재시도는 SDK의 max_retries(지수 백오프)에 맡긴다.
 - 과부하(529)·5xx·연결 오류·출력 검증 실패로 끝내 실패하면 대체 모델로 1회 더 시도한다.
+  대체 모델이 같은 모델이면 출력 검증 실패일 때만 1회 더 시도한다.
   요청·인증·권한 오류(4xx)는 모델을 바꿔도 같으므로 바로 실패한다.
 - 사용량은 CostTracker에 누적하고, 호출 전에 상한을 확인한다.
 """
@@ -37,12 +38,16 @@ class LLMTruncatedError(LLMError):
     """출력이 max_tokens에서 잘렸다. 대체 모델도 같은 상한이라 다시 시도하지 않는다."""
 
 
-def _should_fallback(exc: Exception) -> bool:
-    if isinstance(exc, anthropic.APIStatusError):
-        return exc.status_code >= 500
+def _should_fallback(exc: Exception, *, same_model: bool) -> bool:
     if isinstance(exc, LLMTruncatedError):
         return False
-    return isinstance(exc, anthropic.APIConnectionError | pydantic.ValidationError | LLMError)
+    if isinstance(exc, pydantic.ValidationError | LLMError):
+        return True  # 출력 문제는 다시 뽑으면 달라질 수 있어 같은 모델이어도 1회 더 시도한다
+    if same_model:
+        return False  # 일시 오류는 SDK가 이미 재시도했다
+    if isinstance(exc, anthropic.APIStatusError):
+        return exc.status_code >= 500
+    return isinstance(exc, anthropic.APIConnectionError)
 
 
 class ClaudeLLM:
@@ -70,13 +75,14 @@ class ClaudeLLM:
         self, *, model: str, system: str, user: str, schema: type[M], max_tokens: int
     ) -> M:
         last: Exception | None = None
-        for m in dict.fromkeys([model, self.fallback_model]):  # 같은 모델이면 한 번만
+        same = model == self.fallback_model
+        for m in (model, self.fallback_model):
             if last is not None:
-                log.warning("%s 실패(%s), 대체 모델 %s로 1회 시도", model, type(last).__name__, m)
+                log.warning("%s 실패(%s), %s로 1회 더 시도", model, type(last).__name__, m)
             try:
                 return self._call(m, system, user, schema, max_tokens)
             except Exception as exc:
-                if not _should_fallback(exc):
+                if not _should_fallback(exc, same_model=same):
                     raise
                 last = exc
         raise LLMError(f"{model}·{self.fallback_model} 실패: {type(last).__name__}") from last
@@ -110,7 +116,14 @@ class ClaudeLLM:
                 cache_read_input_tokens=u.cache_read_input_tokens or 0,
             ),
         )
-        log.info("%s: in=%d out=%d $%.4f", model, u.input_tokens, u.output_tokens, cost)
+        log.info(
+            "%s: in=%d out=%d $%.4f stop=%s",
+            model,
+            u.input_tokens,
+            u.output_tokens,
+            cost,
+            resp.stop_reason,
+        )
         if resp.stop_reason == "max_tokens":
             raise LLMTruncatedError(f"{model} 출력이 max_tokens={max_tokens}에서 잘렸다")
         block = next((b for b in resp.content if b.type == "tool_use"), None)

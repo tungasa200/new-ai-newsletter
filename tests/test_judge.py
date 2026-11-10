@@ -137,3 +137,45 @@ def test_select_zero_and_cap(ctx: RunContext) -> None:
     result = judge.select(items, strong, SentIndex(SentFile()), c)
     assert len(result) == 3 + judge.ENRICH_MARGIN
     assert [c.judgment.practicality for c in result][:2] == [5, 5]
+
+
+def _row(idx: int, type_: str = "release", importance: int = 3) -> dict[str, Any]:
+    return {
+        "idx": idx,
+        "relevant": True,
+        "type": type_,
+        "importance": importance,
+        "practicality": 3,
+        "event_key": f"k{idx}",
+    }
+
+
+def test_classify_bad_rows_do_not_fail_the_batch(ctx: RunContext) -> None:
+    """Actions 첫 실행: Haiku가 type='community'를 내 묶음 전체가 실패했다."""
+    items = [_item(0, "community", "forum"), _item(1), _item(2)]
+    replies = [
+        {"judgments": [_row(0, "community"), _row(1), _row(2, importance=9)]},
+        {"judgments": [_row(0, importance=9)]},  # 다시 물어도 틀리면 버린다
+    ]
+    c, llm = _with(ctx, lambda u: replies.pop(0))
+    result = judge.classify(items, c)
+    assert [(j.item_id, j.type) for j in result] == [
+        (items[0].id, judge.FALLBACK_TYPE),  # 목록 밖 유형은 중립 값으로
+        (items[1].id, "release"),
+    ]
+    assert len(llm.calls) == 2
+
+
+def test_classify_re_asks_only_missing_items(ctx: RunContext) -> None:
+    items = [_item(n) for n in range(3)]
+    asked: list[list[str]] = []
+
+    def handler(user: str) -> dict[str, Any]:
+        rows = json.loads(judge.untag("items", user))
+        asked.append([r["title"] for r in rows])
+        return {"judgments": [_row(0)] if len(asked) == 1 else [_row(r["idx"]) for r in rows]}
+
+    c, _ = _with(ctx, handler)
+    result = judge.classify(items, c)
+    assert asked == [["title 0", "title 1", "title 2"], ["title 1", "title 2"]]
+    assert [j.item_id for j in result] == [i.id for i in items]

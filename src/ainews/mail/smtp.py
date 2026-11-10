@@ -20,7 +20,7 @@ log = logging.getLogger(__name__)
 
 SMTP_HOST = "smtp.gmail.com"
 SMTP_PORT = 465
-FROM_NAME = "AI 실무 소식"
+FROM_NAME = "AI Daily"
 
 
 class MailError(Exception):

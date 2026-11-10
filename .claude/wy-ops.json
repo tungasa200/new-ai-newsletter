@@ -1,0 +1,160 @@
+{
+  "schema": 1,
+  "project": "wy-ainews",
+  "product": "wy-ainews",
+  "rolePrefix": "AN-",
+  "pmRole": "AN-pm",
+  "commitRole": "AN-commit",
+  "rotation": {
+    "transcriptMB": 5,
+    "contextTokens": 100000,
+    "notifyTokens": 130000
+  },
+  "memory": {
+    "warnFreeMB": 1024,
+    "blockFreeMB": 500
+  },
+  "approvals": {
+    "namespace": "wy-ainews",
+    "ttlMinutes": 60
+  },
+  "docs": {
+    "progress": "docs/진행현황.md",
+    "decisions": "docs/결정기록.md"
+  },
+  "wyOpsVersion": "0.14.0",
+  "extras": {
+    "off": []
+  },
+  "worktree": {
+    "enabled": true
+  },
+  "roles": [
+    {
+      "name": "AN-commit",
+      "summary": "커밋·버전관리 전담",
+      "agent": true,
+      "group": "commit",
+      "template": "commit"
+    },
+    {
+      "name": "AN-pm",
+      "summary": "개발 총괄: 작업 지시, 보고 취합, 중요 결정을 사용자에게 올림",
+      "agent": true,
+      "group": "pm"
+    },
+    {
+      "name": "AN-planner",
+      "summary": "기획·아키텍처 결정, 요구사항·결정기록 담당",
+      "agent": true,
+      "group": "planner",
+      "template": "planner"
+    },
+    {
+      "name": "AN-backend1",
+      "summary": "백엔드: 서버·공통 모듈·빌드 — 담당 영역은 pm이 배정, 같은 역할의 공용 파일 담당",
+      "agent": true,
+      "group": "backend",
+      "template": "backend",
+      "area": null,
+      "lead": true
+    },
+    {
+      "name": "AN-backend2",
+      "summary": "백엔드: 서버·공통 모듈·빌드 — 담당 영역은 pm이 배정",
+      "agent": true,
+      "group": "backend",
+      "template": "backend",
+      "area": null,
+      "lead": false
+    },
+    {
+      "name": "AN-backend3",
+      "summary": "백엔드: 서버·공통 모듈·빌드 — 담당 영역은 pm이 배정",
+      "agent": true,
+      "group": "backend",
+      "template": "backend",
+      "area": null,
+      "lead": false
+    },
+    {
+      "name": "AN-frontend1",
+      "summary": "프론트엔드: 화면·공용 컴포넌트·API 연결 — 담당 영역은 pm이 배정, 같은 역할의 공용 파일 담당",
+      "agent": true,
+      "group": "frontend",
+      "template": "frontend",
+      "area": null,
+      "lead": true
+    },
+    {
+      "name": "AN-frontend2",
+      "summary": "프론트엔드: 화면·공용 컴포넌트·API 연결 — 담당 영역은 pm이 배정",
+      "agent": true,
+      "group": "frontend",
+      "template": "frontend",
+      "area": null,
+      "lead": false
+    },
+    {
+      "name": "AN-frontend3",
+      "summary": "프론트엔드: 화면·공용 컴포넌트·API 연결 — 담당 영역은 pm이 배정",
+      "agent": true,
+      "group": "frontend",
+      "template": "frontend",
+      "area": null,
+      "lead": false
+    },
+    {
+      "name": "AN-qa1",
+      "summary": "사용성·기능 테스트: 구현 동작 검증, 요구사항과 대조 — 담당 영역은 pm이 배정, 같은 역할의 공용 파일 담당",
+      "agent": true,
+      "group": "qa",
+      "template": "qa",
+      "area": null,
+      "lead": true
+    },
+    {
+      "name": "AN-qa2",
+      "summary": "사용성·기능 테스트: 구현 동작 검증, 요구사항과 대조 — 담당 영역은 pm이 배정",
+      "agent": true,
+      "group": "qa",
+      "template": "qa",
+      "area": null,
+      "lead": false
+    },
+    {
+      "name": "AN-qa3",
+      "summary": "사용성·기능 테스트: 구현 동작 검증, 요구사항과 대조 — 담당 영역은 pm이 배정",
+      "agent": true,
+      "group": "qa",
+      "template": "qa",
+      "area": null,
+      "lead": false
+    },
+    {
+      "name": "AN-design",
+      "summary": "디자인: 화면 설계·목업, 구현 화면 점검",
+      "agent": true,
+      "group": "design",
+      "template": "design"
+    },
+    {
+      "name": "AN-browser",
+      "summary": "외부 서비스 콘솔 작업(배포·호스팅 설정). 코드는 수정하지 않음",
+      "agent": true,
+      "group": "browser",
+      "template": "browser"
+    }
+  ],
+  "detected": [],
+  "verify": {
+    "setup": null,
+    "build": null,
+    "test": null,
+    "typecheck": null,
+    "lint": null,
+    "format": null
+  },
+  "stackNotes": [],
+  "tools": []
+}

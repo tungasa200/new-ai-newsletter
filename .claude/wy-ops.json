@@ -27,7 +27,8 @@
     "off": []
   },
   "worktree": {
-    "enabled": true
+    "enabled": true,
+    "base": "master"
   },
   "roles": [
     {

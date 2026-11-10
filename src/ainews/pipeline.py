@@ -30,14 +30,11 @@ from ainews.models import (
 )
 from ainews.ops import notify, runlog
 from ainews.settings import KST, Settings, load_sources
-from ainews.util.cost import CHARS_PER_TOKEN_ESTIMATE, CostTracker
+from ainews.util.cost import CostTracker
 from ainews.util.http import Http
-from ainews.util.llm import LLM, ClaudeLLM
+from ainews.util.llm import LLM, ClaudeLLM, LLMTruncatedError
 
 log = logging.getLogger("ainews")
-
-EDIT_MAX_TOKENS = 8000
-KNOWLEDGE_MAX_TOKENS = 4000
 
 
 @dataclass
@@ -136,11 +133,11 @@ def run(
         candidates = stages.select(items, judgments, index, ctx)
         stage = "enrich"
         candidates = _enrich(candidates, stages.enrich_bodies(_items_of(candidates), ctx))
-        candidates = _fit_budget(candidates, cost, settings.model_edit)
-
         stage = "edit"
         knowledge = store.load_knowledge()
-        digest = stages.edit(candidates, [i for i in items if i.is_changelog], knowledge, ctx)
+        changelog = [i for i in items if i.is_changelog]
+        candidates = _fit_budget(candidates, changelog, knowledge, ctx)
+        digest = stages.edit(candidates, changelog, knowledge, ctx)
         if digest.is_empty and not settings.send_empty and not opts.dry_run:
             log.warning("게재할 항목이 없어 발송하지 않는다(FR-MAIL-05).")
             result.status = record.status = "skipped"
@@ -167,7 +164,7 @@ def run(
                 )
 
         stage = "knowledge"
-        update = _update_knowledge(stages, knowledge, items, ctx)
+        update = _update_knowledge(stages, knowledge, items, ctx, record.warnings)
         if update is not None and not opts.dry_run:
             store.save_knowledge(update.markdown)
         return result
@@ -200,17 +197,16 @@ def _enrich(candidates: list[Candidate], enriched: list[Item]) -> list[Candidate
     ]
 
 
-def _estimate_edit(candidates: list[Candidate], model: str) -> float:
-    chars = sum(
-        len(i.title) + len(i.summary) + len(i.body or "") for c in candidates for i in c.items
-    )
-    return CostTracker.estimate(model, chars // CHARS_PER_TOKEN_ESTIMATE, EDIT_MAX_TOKENS)
-
-
-def _fit_budget(candidates: list[Candidate], cost: CostTracker, model: str) -> list[Candidate]:
+def _fit_budget(
+    candidates: list[Candidate], changelog: list[Item], knowledge: str, ctx: RunContext
+) -> list[Candidate]:
     """편집 비용이 상한을 넘을 것 같으면 우선순위가 낮은 후보부터 뺀다(D-07)."""
     before = len(candidates)
-    while len(candidates) > 1 and not cost.can_afford(_estimate_edit(candidates, model)):
+
+    def fits(cs: list[Candidate]) -> bool:
+        return ctx.cost.can_afford(edit_mod.estimate_edit(cs, changelog, knowledge, ctx))
+
+    while len(candidates) > 1 and not fits(candidates):
         candidates = candidates[:-1]
     if len(candidates) < before:
         log.warning("비용 상한 때문에 후보를 %d → %d건으로 줄였다", before, len(candidates))
@@ -222,15 +218,16 @@ def _update_knowledge(
     knowledge: str,
     items: list[Item],
     ctx: RunContext,
+    warnings: list[str],
 ) -> KnowledgeUpdate | None:
-    """메모 갱신은 실패해도 실행을 실패로 만들지 않는다(메일은 이미 나갔다)."""
+    """메모 갱신은 실패해도 실행을 실패로 만들지 않는다(메일은 이미 나갔다).
+
+    실패는 warnings(RunRecord)에 남겨 실행 요약·운영 알림에 보이게 한다.
+    """
     official = [i for i in items if i.category == "official"]
-    est = CostTracker.estimate(
-        ctx.settings.model_edit,
-        (len(knowledge) + sum(len(i.summary) for i in official)) // CHARS_PER_TOKEN_ESTIMATE,
-        KNOWLEDGE_MAX_TOKENS,
-    )
-    if not official or not ctx.cost.can_afford(est):
+    if not official or not ctx.cost.can_afford(
+        edit_mod.estimate_knowledge(knowledge, official, ctx)
+    ):
         log.info(
             "권장 사항 메모 갱신을 건너뛴다(공식 항목 %d건, 남은 예산 $%.4f)",
             len(official),
@@ -239,8 +236,10 @@ def _update_knowledge(
         return None
     try:
         update = stages.update_knowledge(knowledge, official, ctx)
-    except Exception:
+    except Exception as exc:
         log.exception("권장 사항 메모 갱신 실패(무시하고 계속)")
+        cause = "출력이 max_tokens에서 잘림" if isinstance(exc, LLMTruncatedError) else ""
+        warnings.append(f"권장 사항 메모 갱신 실패: {cause or type(exc).__name__}")
         return None
     if update is None:
         return None

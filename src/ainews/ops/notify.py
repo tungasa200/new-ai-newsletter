@@ -1,6 +1,7 @@
 """운영 알림(FR-OPS-03·07, D-07): OPS_EMAIL이 있으면 운영자에게 메일로 알린다.
 
-알림 사유: 실행 실패, 이번 실행에서 하루 비용이 상한의 80%를 넘음, 3회 연속 실패한 소스.
+알림 사유: 실행 실패, 이번 실행에서 하루 비용이 상한의 80%를 넘음, 3회 연속 실패한 소스,
+실행 경고(RunRecord.warnings, 예: 권장 사항 메모 갱신 실패).
 알림에는 단계·오류 종류·숫자만 넣고 비밀값·수신자 주소는 넣지 않는다. 로그에도 주소를 남기지 않는다.
 알림 발송이 실패해도 실행 결과를 바꾸지 않는다. Gmail 자체가 막힌 경우는 Actions 실패 알림이
 맡는다(D-04).
@@ -55,6 +56,7 @@ def build_alert(record: RunRecord, runs: RunsFile, *, budget_usd: float) -> Rend
         reasons.append(
             ("소스 점검 필요", f"{SOURCE_FAILURE_ALERT}회 연속 실패: " + ", ".join(failing))
         )
+    reasons += [("실행 경고", w) for w in record.warnings]
     if not reasons:
         return None
 

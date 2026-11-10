@@ -33,9 +33,15 @@ class LLMError(Exception):
     """기본 모델과 대체 모델이 모두 실패했다."""
 
 
+class LLMTruncatedError(LLMError):
+    """출력이 max_tokens에서 잘렸다. 대체 모델도 같은 상한이라 다시 시도하지 않는다."""
+
+
 def _should_fallback(exc: Exception) -> bool:
     if isinstance(exc, anthropic.APIStatusError):
         return exc.status_code >= 500
+    if isinstance(exc, LLMTruncatedError):
+        return False
     return isinstance(exc, anthropic.APIConnectionError | pydantic.ValidationError | LLMError)
 
 
@@ -105,6 +111,8 @@ class ClaudeLLM:
             ),
         )
         log.info("%s: in=%d out=%d $%.4f", model, u.input_tokens, u.output_tokens, cost)
+        if resp.stop_reason == "max_tokens":
+            raise LLMTruncatedError(f"{model} 출력이 max_tokens={max_tokens}에서 잘렸다")
         block = next((b for b in resp.content if b.type == "tool_use"), None)
         if block is None:
             raise LLMError(f"{model} 응답에 tool_use가 없다(stop_reason={resp.stop_reason})")

@@ -136,3 +136,12 @@ def test_pipeline_failure_sends_ops_alert(
     sent.clear()  # dry-run은 알리지 않는다
     run(ops, RunOptions(dry_run=True), stages=stages, llm=FakeLLM(), now=now)
     assert sent == []
+
+
+def test_run_warning_shows_in_alert_and_summary() -> None:
+    rec = _record(warnings=["권장 사항 메모 갱신 실패: 출력이 max_tokens에서 잘림"])
+    alert = notify.build_alert(rec, _runs_after(rec), budget_usd=1.0)
+    assert alert is not None and "경고" in alert.subject and "max_tokens" in alert.text
+    assert "- 경고: 권장 사항 메모 갱신 실패" in runlog.summarize(
+        rec, _runs_after(rec), budget_usd=1.0
+    )

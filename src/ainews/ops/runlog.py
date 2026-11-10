@@ -24,6 +24,7 @@ def summarize(record: RunRecord, runs: RunsFile, *, budget_usd: float) -> str:
         + f" / 발송: {'예' if record.sent else '아니오'}",
         f"- 비용: 이번 ${record.cost_usd:.4f} / 오늘 합계 ${spent:.4f} / 상한 ${budget_usd:.2f}",
     ]
+    lines += [f"- 경고: {w}" for w in record.warnings]
     if record.tokens:
         lines.append("- 토큰: " + ", ".join(f"{k}={v}" for k, v in sorted(record.tokens.items())))
     if record.source_stats:

@@ -1,0 +1,22 @@
+{# stub 템플릿(AN-backend3가 교체). #}
+{{ subject }}
+
+{{ d.summary }}
+{% for name, kind in [("실무팁", "tip"), ("주요 뉴스", "news")] %}
+{% set entries = d.items | selectattr("kind", "equalto", kind) | list %}
+{% if entries %}
+
+[{{ name }}]
+{% for e in entries %}
+- {{ e.title }}
+  {{ e.sources[0].url }}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% if d.releases %}
+
+[도구·릴리스 변경]
+{% for r in d.releases %}
+- {{ r.tool }}: {{ r.one_line }} {{ r.url }}
+{% endfor %}
+{% endif %}

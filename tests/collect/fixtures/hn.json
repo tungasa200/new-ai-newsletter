@@ -1,0 +1,8 @@
+{"hits": [
+  {"title": "Claude Code adds hooks", "url": "https://blog.example.org/claude-hooks", "points": 320,
+   "num_comments": 120, "created_at": "2026-11-10T12:00:00Z", "objectID": "111", "story_text": null},
+  {"title": "Ask HN: How do you prompt agents?", "url": null, "points": 80, "num_comments": 60,
+   "created_at": "2026-11-10T09:00:00Z", "objectID": "222", "story_text": "<p>I use <i>plans</i>.</p>"},
+  {"title": "A new sorting algorithm", "url": "https://example.org/sort", "points": 500,
+   "num_comments": 90, "created_at": "2026-11-10T08:00:00Z", "objectID": "333", "story_text": null}
+]}

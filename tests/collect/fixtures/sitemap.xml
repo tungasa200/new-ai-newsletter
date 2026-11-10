@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url><loc>https://www.anthropic.example/</loc><lastmod>2026-11-09T18:57:42.000Z</lastmod></url>
+<url><loc>https://www.anthropic.example/news</loc><lastmod>2026-11-10T18:00:00.000Z</lastmod></url>
+<url><loc>https://www.anthropic.example/news/roadshow-launch</loc><lastmod>2026-11-10T11:32:16.000Z</lastmod></url>
+<url><loc>https://www.anthropic.example/engineering/building-effective-agents</loc><lastmod>2026-11-10T01:00:00Z</lastmod></url>
+<url><loc>https://www.anthropic.example/news/100k-context-windows</loc><lastmod>2026-10-15T06:32:37.000Z</lastmod></url>
+<url><loc>https://www.anthropic.example/careers</loc><lastmod>2026-11-10T06:32:37.000Z</lastmod></url>
+</urlset>

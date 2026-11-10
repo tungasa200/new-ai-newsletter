@@ -23,6 +23,7 @@ from ainews.context import RunContext
 from ainews.judge import rank, tagged, untag
 from ainews.models import (
     Candidate,
+    Category,
     CodeBlock,
     DeepItem,
     Digest,
@@ -89,6 +90,29 @@ def is_restricted(item: Item) -> bool:
     return is_verbatim_only(item) or (
         host == "anthropic.com" and path.startswith(("/news/", "/engineering/"))
     )
+
+
+# 벤더 공식 도메인(하위 도메인 포함). 커뮤니티 경로로 들어온 공식 글도 출처는 공식으로 표시한다.
+OFFICIAL_DOMAINS = (
+    "anthropic.com",
+    "claude.com",
+    "openai.com",
+    "blog.google",
+    "ai.google.dev",
+    "aistudio.google.com",
+    "developers.googleblog.com",
+    "deepmind.google",
+    "github.blog",
+    "cursor.com",
+)
+
+
+def source_category(item: Item) -> Category:
+    """출처 표시 분류: 링크 호스트가 공식 도메인이면 official, 아니면 들어온 소스의 분류."""
+    host = _host_path(item)[0]
+    if any(host == d or host.endswith("." + d) for d in OFFICIAL_DOMAINS):
+        return "official"
+    return item.category
 
 
 # --- 3단계 편집 ---
@@ -288,7 +312,7 @@ def _build_items(
             ctx.log.info("구식 판정으로 제외: %s", c.event_key)
             continue
         refs = _pick(docs, e.source_ids) or list(c.items)
-        refs.sort(key=lambda i: i.category != "official")
+        refs.sort(key=lambda i: source_category(i) != "official")
         kind = e.kind
         if kind == "tip" and not (e.steps and e.applies_to):  # FR-EDT-04 필수 칸이 비었다
             ctx.log.warning(
@@ -305,7 +329,9 @@ def _build_items(
                 how_to_apply=e.how_to_apply,
                 caveats=e.caveats,
                 freshness=e.freshness,
-                sources=[SourceRef(title=i.title, url=i.url, kind=i.category) for i in refs],
+                sources=[
+                    SourceRef(title=i.title, url=i.url, kind=source_category(i)) for i in refs
+                ],
                 event_key=c.event_key,
                 importance=c.judgment.importance,
                 practicality=c.judgment.practicality,

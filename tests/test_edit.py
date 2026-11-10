@@ -100,6 +100,15 @@ def test_edit_changelog_overflow_becomes_title_lines(ctx: RunContext) -> None:
     assert [(r.url, r.one_line) for r in d.releases] == [(i.url, i.title) for i in rels[60:]]
 
 
+def test_source_category_uses_link_host() -> None:
+    via_hn = "community"
+    assert edit.source_category(_item("https://www.anthropic.com/news/x", via_hn)) == "official"
+    assert edit.source_category(_item("https://blog.google/technology/x", via_hn)) == "official"
+    assert edit.source_category(_item("https://platform.claude.com/docs/x", via_hn)) == "official"
+    assert edit.source_category(_item("https://notanthropic.com/x", via_hn)) == "community"
+    assert edit.source_category(_item("https://github.com/anthropics/x")) == "official"
+
+
 def test_edit_builds_items_and_releases_from_ids(ctx: RunContext) -> None:
     official = _item("https://example.com/news/a?utm_source=x", body="본문" * 10)
     forum = _item("https://news.example.net/item?id=1", category="community")

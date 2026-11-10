@@ -19,11 +19,20 @@ def test_load_settings_defaults_and_secrets_hidden() -> None:
     assert s.daily_budget_usd == 1.0
     assert s.model_classify == "claude-haiku-5-5"
     assert s.send_empty is False
+    assert (s.publish_min_importance, s.publish_min_practicality, s.publish_max_items) == (5, 4, 5)
+    assert s.step_summary_path is None
     assert "pw" not in repr(s) and "a@x.invalid" not in repr(s)
 
 
 def test_load_settings_overrides() -> None:
-    s = load_settings({"AINEWS_DAILY_BUDGET_USD": "0.5", "AINEWS_SEND_EMPTY": "true"})
+    s = load_settings(
+        {
+            "AINEWS_DAILY_BUDGET_USD": "0.5",
+            "AINEWS_SEND_EMPTY": "true",
+            "AINEWS_PUBLISH_MAX_ITEMS": "3",
+        }
+    )
+    assert s.publish_max_items == 3
     assert s.daily_budget_usd == 0.5
     assert s.send_empty is True
 

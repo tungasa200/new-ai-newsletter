@@ -35,11 +35,16 @@ class Settings:
     state_dir: Path = Path("state")
     out_dir: Path = Path("out")
     sources_path: Path = Path("sources.yaml")
+    step_summary_path: Path | None = None  # GitHub Actions job 요약 파일(GITHUB_STEP_SUMMARY)
     daily_budget_usd: float = 1.00
     model_classify: str = "claude-haiku-5-5"
     model_edit: str = "claude-sonnet-5-5"
     model_fallback: str = "claude-haiku-5-5"
     send_empty: bool = False
+    # 게재 기준(D-13, FR-SEL-06): 중요도 이 값 이상 또는 실무 적용성 이 값 이상. 하루 상한 건수.
+    publish_min_importance: int = 5
+    publish_min_practicality: int = 4
+    publish_max_items: int = 5
     user_agent_contact: str = DEFAULT_CONTACT
 
     @property
@@ -69,11 +74,19 @@ def load_settings(env: Mapping[str, str] | None = None) -> Settings:
         github_token=get("GITHUB_TOKEN"),
         state_dir=Path(get("AINEWS_STATE_DIR") or defaults.state_dir),
         out_dir=Path(get("AINEWS_OUT_DIR") or defaults.out_dir),
+        step_summary_path=Path(p) if (p := get("GITHUB_STEP_SUMMARY")) else None,
         daily_budget_usd=float(get("AINEWS_DAILY_BUDGET_USD") or defaults.daily_budget_usd),
         model_classify=get("AINEWS_MODEL_CLASSIFY") or defaults.model_classify,
         model_edit=get("AINEWS_MODEL_EDIT") or defaults.model_edit,
         model_fallback=get("AINEWS_MODEL_FALLBACK") or defaults.model_fallback,
         send_empty=_bool(get("AINEWS_SEND_EMPTY") or "false"),
+        publish_min_importance=int(
+            get("AINEWS_PUBLISH_MIN_IMPORTANCE") or defaults.publish_min_importance
+        ),
+        publish_min_practicality=int(
+            get("AINEWS_PUBLISH_MIN_PRACTICALITY") or defaults.publish_min_practicality
+        ),
+        publish_max_items=int(get("AINEWS_PUBLISH_MAX_ITEMS") or defaults.publish_max_items),
         user_agent_contact=get("AINEWS_USER_AGENT_CONTACT") or defaults.user_agent_contact,
     )
 

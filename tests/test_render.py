@@ -49,7 +49,7 @@ def test_render_deep_items_and_releases() -> None:
         ],
     )
     mail = render(digest)
-    assert mail.subject == "AI 실무 소식 — 2026.11.11 (핵심 2건)"
+    assert mail.subject == "AI Daily — 2026.11.11 (핵심 2건)"
 
     html = mail.html
     assert "<link" not in html and "<style" not in html and "<script" not in html
@@ -67,7 +67,7 @@ def test_render_deep_items_and_releases() -> None:
         assert text in html
     assert "적용 대상:</strong> tool 2.x" in html and "단계 A" in html
     assert "{&#34;a&#34;: &#34;&lt;b&gt;&#34;}" in html
-    assert "<strong>CLI v1.2</strong>: 한 줄" in html and "<strong>Cursor</strong>" in html
+    assert ">CLI v1.2</strong>: 한 줄" in html and ">Cursor</strong>: Faster tab" in html
     assert EMPTY_ITEMS not in html
 
     text = mail.text
@@ -80,6 +80,6 @@ def test_render_deep_items_and_releases() -> None:
 
 def test_render_empty_day() -> None:
     mail = render(Digest(date=DAY, summary="새 소식 없음"))
-    assert mail.subject == "AI 실무 소식 — 2026.11.11"
+    assert mail.subject == "AI Daily — 2026.11.11"
     assert EMPTY_ITEMS in mail.html and EMPTY_ITEMS in mail.text
     assert "도구·릴리스 변경" not in mail.html and "도구·릴리스 변경" not in mail.text

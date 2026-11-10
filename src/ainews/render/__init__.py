@@ -30,7 +30,7 @@ _env.globals.update(
 
 
 def render(digest: Digest) -> RenderedMail:
-    subject = f"AI 실무 소식 — {digest.date:%Y.%m.%d}"
+    subject = f"AI Daily — {digest.date:%Y.%m.%d}"
     if digest.items:
         subject += f" (핵심 {len(digest.items)}건)"
     return RenderedMail(

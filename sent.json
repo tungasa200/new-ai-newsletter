@@ -12,6 +12,12 @@
    "sent_at": "2026-11-10T17:20:47.400639Z",
    "run_id": "20261110T172047Z-5a4b59",
    "count": 8
+  },
+  {
+   "date": "2026-11-12",
+   "sent_at": "2026-11-12T01:01:35.899330Z",
+   "run_id": "20261112T010135Z-0681bd",
+   "count": 8
   }
  ],
  "entries": [
@@ -194,6 +200,72 @@
    "event_key": "https://github.com/openai/openai-python/releases/tag/v3.44.0",
    "title_hash": "7b5cf19aa755",
    "sent_on": "2026-11-11"
+  },
+  {
+   "url": "https://aistudio.google.com/docs/changelog#11-11-2026",
+   "event_key": "google-gemini-decision-1-decisions-api-release",
+   "title_hash": "b97be828c3c0",
+   "sent_on": "2026-11-12"
+  },
+  {
+   "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api",
+   "event_key": "google-gemini-decision-1-decisions-api-release",
+   "title_hash": "b97be828c3c0",
+   "sent_on": "2026-11-12"
+  },
+  {
+   "url": "https://github.com/googleapis/python-genai/releases/tag/v3.2.0",
+   "event_key": "google-gemini-decision-1-decisions-api-release",
+   "title_hash": "b97be828c3c0",
+   "sent_on": "2026-11-12"
+  },
+  {
+   "url": "https://simonwillison.net/2026/Nov/11/gemini-decisions-api",
+   "event_key": "google-gemini-decision-1-decisions-api-release",
+   "title_hash": "b97be828c3c0",
+   "sent_on": "2026-11-12"
+  },
+  {
+   "url": "https://github.com/GoogleChrome/modern-web-guidance",
+   "event_key": "chrome-modern-web-guidance-1-0-release",
+   "title_hash": "18f53493a54e",
+   "sent_on": "2026-11-12"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-10-gemini-4-carbon-in-github-copilot",
+   "event_key": "https://github.blog/changelog/2026-11-10-gemini-4-carbon-in-github-copilot",
+   "title_hash": "33fb9690fa79",
+   "sent_on": "2026-11-12"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-10-github-app-support-for-enterprise-copilot-seat-management",
+   "event_key": "https://github.blog/changelog/2026-11-10-github-app-support-for-enterprise-copilot-seat-management",
+   "title_hash": "d463008a11a1",
+   "sent_on": "2026-11-12"
+  },
+  {
+   "url": "https://github.com/openai/codex/releases/tag/rust-v0.167.2",
+   "event_key": "https://github.com/openai/codex/releases/tag/rust-v0.167.2",
+   "title_hash": "24cc10a3ec16",
+   "sent_on": "2026-11-12"
+  },
+  {
+   "url": "https://platform.claude.com/docs/en/release-notes/overview#dreams-claude-fable-5-2",
+   "event_key": "https://platform.claude.com/docs/en/release-notes/overview#dreams-claude-fable-5-2",
+   "title_hash": "626bc61c3bb0",
+   "sent_on": "2026-11-12"
+  },
+  {
+   "url": "https://github.com/googleapis/python-genai/releases/tag/v3.1.0",
+   "event_key": "https://github.com/googleapis/python-genai/releases/tag/v3.1.0",
+   "title_hash": "cc5de522f9ca",
+   "sent_on": "2026-11-12"
+  },
+  {
+   "url": "https://github.com/openai/openai-python/releases/tag/v3.47.0",
+   "event_key": "https://github.com/openai/openai-python/releases/tag/v3.47.0",
+   "title_hash": "4e24f3c29320",
+   "sent_on": "2026-11-12"
   }
  ]
 }

@@ -886,6 +886,21 @@
    "tokens": {},
    "source_stats": [],
    "warnings": []
+  },
+  {
+   "run_id": "20261112T031101Z-f5517c",
+   "date": "2026-11-12",
+   "started_at": "2026-11-12T03:11:01.338273Z",
+   "finished_at": "2026-11-12T03:11:01.339192Z",
+   "status": "skipped",
+   "failed_stage": null,
+   "error": null,
+   "sent": false,
+   "dry_run": false,
+   "cost_usd": 0.0,
+   "tokens": {},
+   "source_stats": [],
+   "warnings": []
   }
  ],
  "sources": {

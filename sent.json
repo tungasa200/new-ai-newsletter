@@ -18,6 +18,12 @@
    "sent_at": "2026-11-12T01:01:35.899330Z",
    "run_id": "20261112T010135Z-0681bd",
    "count": 8
+  },
+  {
+   "date": "2026-11-13",
+   "sent_at": "2026-11-13T02:02:25.191702Z",
+   "run_id": "20261113T020225Z-75fbf2",
+   "count": 6
   }
  ],
  "entries": [
@@ -266,6 +272,60 @@
    "event_key": "https://github.com/openai/openai-python/releases/tag/v3.47.0",
    "title_hash": "4e24f3c29320",
    "sent_on": "2026-11-12"
+  },
+  {
+   "url": "https://aistudio.google.com/docs/changelog#11-12-2026",
+   "event_key": "google-gemini-4-hydrogen-ga-release",
+   "title_hash": "fed477b04ffd",
+   "sent_on": "2026-11-13"
+  },
+  {
+   "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-hydrogen",
+   "event_key": "google-gemini-4-hydrogen-ga-release",
+   "title_hash": "fed477b04ffd",
+   "sent_on": "2026-11-13"
+  },
+  {
+   "url": "https://simonwillison.net/2026/Nov/12/llm-gemini",
+   "event_key": "google-gemini-4-hydrogen-ga-release",
+   "title_hash": "fed477b04ffd",
+   "sent_on": "2026-11-13"
+  },
+  {
+   "url": "https://antigravity.google/blog/gemini-4-hydrogen-in-google-antigravity",
+   "event_key": "google-antigravity-gemini-4-hydrogen-orchestrator-release",
+   "title_hash": "087bb9325983",
+   "sent_on": "2026-11-13"
+  },
+  {
+   "url": "https://news.hada.io/topic?id=37077",
+   "event_key": "google-antigravity-gemini-4-hydrogen-orchestrator-release",
+   "title_hash": "087bb9325983",
+   "sent_on": "2026-11-13"
+  },
+  {
+   "url": "https://platform.claude.com/docs/en/release-notes/overview#self-hosted-managed-agents",
+   "event_key": "https://platform.claude.com/docs/en/release-notes/overview#self-hosted-managed-agents",
+   "title_hash": "405710c7e3bc",
+   "sent_on": "2026-11-13"
+  },
+  {
+   "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.323",
+   "event_key": "https://github.com/anthropics/claude-code/releases/tag/v2.1.323",
+   "title_hash": "55624facc8a7",
+   "sent_on": "2026-11-13"
+  },
+  {
+   "url": "https://github.com/openai/openai-python/releases/tag/v3.50.0",
+   "event_key": "https://github.com/openai/openai-python/releases/tag/v3.50.0",
+   "title_hash": "a74cff897abf",
+   "sent_on": "2026-11-13"
+  },
+  {
+   "url": "https://github.com/googleapis/python-genai/releases/tag/v3.3.0",
+   "event_key": "https://github.com/googleapis/python-genai/releases/tag/v3.3.0",
+   "title_hash": "246b7d79179e",
+   "sent_on": "2026-11-13"
   }
  ]
 }

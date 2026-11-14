@@ -1196,6 +1196,21 @@
     }
    ],
    "warnings": []
+  },
+  {
+   "run_id": "20261114T023321Z-880c22",
+   "date": "2026-11-14",
+   "started_at": "2026-11-14T02:33:21.825059Z",
+   "finished_at": "2026-11-14T02:33:21.825853Z",
+   "status": "skipped",
+   "failed_stage": null,
+   "error": null,
+   "sent": false,
+   "dry_run": false,
+   "cost_usd": 0.0,
+   "tokens": {},
+   "source_stats": [],
+   "warnings": []
   }
  ],
  "sources": {

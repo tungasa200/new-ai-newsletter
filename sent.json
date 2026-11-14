@@ -24,6 +24,12 @@
    "sent_at": "2026-11-13T02:02:25.191702Z",
    "run_id": "20261113T020225Z-75fbf2",
    "count": 6
+  },
+  {
+   "date": "2026-11-14",
+   "sent_at": "2026-11-14T01:37:56.312030Z",
+   "run_id": "20261114T013756Z-45e1ba",
+   "count": 8
   }
  ],
  "entries": [
@@ -326,6 +332,54 @@
    "event_key": "https://github.com/googleapis/python-genai/releases/tag/v3.3.0",
    "title_hash": "246b7d79179e",
    "sent_on": "2026-11-13"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-13-upcoming-deprecation-of-selected-github-copilot-models-in-december",
+   "event_key": "github-copilot-model-deprecation-december-2026",
+   "title_hash": "1817c8a3b3f7",
+   "sent_on": "2026-11-14"
+  },
+  {
+   "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.325",
+   "event_key": "https://github.com/anthropics/claude-code/releases/tag/v2.1.325",
+   "title_hash": "a8da4de209ab",
+   "sent_on": "2026-11-14"
+  },
+  {
+   "url": "https://github.com/openai/openai-python/releases/tag/v3.51.0",
+   "event_key": "https://github.com/openai/openai-python/releases/tag/v3.51.0",
+   "title_hash": "8d8d975ccd3e",
+   "sent_on": "2026-11-14"
+  },
+  {
+   "url": "https://github.com/openai/codex/releases/tag/rust-v0.169.0",
+   "event_key": "https://github.com/openai/codex/releases/tag/rust-v0.169.0",
+   "title_hash": "edd5c66ad8ef",
+   "sent_on": "2026-11-14"
+  },
+  {
+   "url": "https://github.com/openai/codex/releases/tag/rust-v0.168.0",
+   "event_key": "https://github.com/openai/codex/releases/tag/rust-v0.168.0",
+   "title_hash": "a895fddb8bdb",
+   "sent_on": "2026-11-14"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-13-github-enterprise-server-support-in-the-github-copilot-app",
+   "event_key": "https://github.blog/changelog/2026-11-13-github-enterprise-server-support-in-the-github-copilot-app",
+   "title_hash": "c084492c532b",
+   "sent_on": "2026-11-14"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-13-gemini-4-hydrogen-in-github-copilot",
+   "event_key": "https://github.blog/changelog/2026-11-13-gemini-4-hydrogen-in-github-copilot",
+   "title_hash": "6bcb91f2cdae",
+   "sent_on": "2026-11-14"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-13-manage-ai-scan-for-repositories-using-the-rest-api",
+   "event_key": "https://github.blog/changelog/2026-11-13-manage-ai-scan-for-repositories-using-the-rest-api",
+   "title_hash": "9811efb3a171",
+   "sent_on": "2026-11-14"
   }
  ]
 }

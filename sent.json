@@ -30,6 +30,12 @@
    "sent_at": "2026-11-14T01:37:56.312030Z",
    "run_id": "20261114T013756Z-45e1ba",
    "count": 8
+  },
+  {
+   "date": "2026-11-16",
+   "sent_at": "2026-11-16T01:19:32.027724Z",
+   "run_id": "20261116T011932Z-0b1a4e",
+   "count": 1
   }
  ],
  "entries": [
@@ -380,6 +386,12 @@
    "event_key": "https://github.blog/changelog/2026-11-13-manage-ai-scan-for-repositories-using-the-rest-api",
    "title_hash": "9811efb3a171",
    "sent_on": "2026-11-14"
+  },
+  {
+   "url": "https://github.com/google-gemini/gemini-cli/releases/tag/v0.68.0",
+   "event_key": "https://github.com/google-gemini/gemini-cli/releases/tag/v0.68.0",
+   "title_hash": "4ac2fa2c3a4f",
+   "sent_on": "2026-11-16"
   }
  ]
 }

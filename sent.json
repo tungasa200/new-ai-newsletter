@@ -36,6 +36,12 @@
    "sent_at": "2026-11-16T01:19:32.027724Z",
    "run_id": "20261116T011932Z-0b1a4e",
    "count": 1
+  },
+  {
+   "date": "2026-11-17",
+   "sent_at": "2026-11-17T04:06:42.570422Z",
+   "run_id": "20261117T040642Z-b9514d",
+   "count": 9
   }
  ],
  "entries": [
@@ -392,6 +398,60 @@
    "event_key": "https://github.com/google-gemini/gemini-cli/releases/tag/v0.68.0",
    "title_hash": "4ac2fa2c3a4f",
    "sent_on": "2026-11-16"
+  },
+  {
+   "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.326",
+   "event_key": "https://github.com/anthropics/claude-code/releases/tag/v2.1.326",
+   "title_hash": "900319459243",
+   "sent_on": "2026-11-17"
+  },
+  {
+   "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.9.0",
+   "event_key": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.9.0",
+   "title_hash": "bd3e7f92935f",
+   "sent_on": "2026-11-17"
+  },
+  {
+   "url": "https://github.com/openai/openai-python/releases/tag/v3.52.0",
+   "event_key": "https://github.com/openai/openai-python/releases/tag/v3.52.0",
+   "title_hash": "971c2a5d8d90",
+   "sent_on": "2026-11-17"
+  },
+  {
+   "url": "https://github.com/googleapis/python-genai/releases/tag/v3.4.0",
+   "event_key": "https://github.com/googleapis/python-genai/releases/tag/v3.4.0",
+   "title_hash": "d269dd2569cd",
+   "sent_on": "2026-11-17"
+  },
+  {
+   "url": "https://platform.claude.com/docs/en/release-notes/overview#text-watermark-claude-opus-4-6-and-4-5-models",
+   "event_key": "https://platform.claude.com/docs/en/release-notes/overview#text-watermark-claude-opus-4-6-and-4-5-models",
+   "title_hash": "17662be3faab",
+   "sent_on": "2026-11-17"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-16-github-copilot-models-deprecated-on-november-16-2026",
+   "event_key": "https://github.blog/changelog/2026-11-16-github-copilot-models-deprecated-on-november-16-2026",
+   "title_hash": "eac6a6398094",
+   "sent_on": "2026-11-17"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-16-control-where-github-copilot-customizations-come-from",
+   "event_key": "https://github.blog/changelog/2026-11-16-control-where-github-copilot-customizations-come-from",
+   "title_hash": "4874c4c61769",
+   "sent_on": "2026-11-17"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-16-vs-code-retires-the-local-harness-in-february-2027",
+   "event_key": "https://github.blog/changelog/2026-11-16-vs-code-retires-the-local-harness-in-february-2027",
+   "title_hash": "8fe3c96229a9",
+   "sent_on": "2026-11-17"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-16-bulk-start-ai-scan-for-repositories",
+   "event_key": "https://github.blog/changelog/2026-11-16-bulk-start-ai-scan-for-repositories",
+   "title_hash": "bd4f0cd1dbc2",
+   "sent_on": "2026-11-17"
   }
  ]
 }

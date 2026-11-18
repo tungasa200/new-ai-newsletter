@@ -42,6 +42,12 @@
    "sent_at": "2026-11-17T04:06:42.570422Z",
    "run_id": "20261117T040642Z-b9514d",
    "count": 9
+  },
+  {
+   "date": "2026-11-18",
+   "sent_at": "2026-11-18T03:04:20.454013Z",
+   "run_id": "20261118T030420Z-bbd13c",
+   "count": 15
   }
  ],
  "entries": [
@@ -452,6 +458,114 @@
    "event_key": "https://github.blog/changelog/2026-11-16-bulk-start-ai-scan-for-repositories",
    "title_hash": "bd4f0cd1dbc2",
    "sent_on": "2026-11-17"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-17-openais-gpt-6-2-astra-and-gpt-6-2-sol-now-available",
+   "event_key": "openai-gpt-6-2-astra-sol-release",
+   "title_hash": "17874f726fc2",
+   "sent_on": "2026-11-18"
+  },
+  {
+   "url": "https://github.com/openai/openai-python/releases/tag/v3.53.0",
+   "event_key": "openai-gpt-6-2-astra-sol-release",
+   "title_hash": "17874f726fc2",
+   "sent_on": "2026-11-18"
+  },
+  {
+   "url": "https://openai.com/index/introducing-gpt-6-2-astra-sol",
+   "event_key": "openai-gpt-6-2-astra-sol-release",
+   "title_hash": "17874f726fc2",
+   "sent_on": "2026-11-18"
+  },
+  {
+   "url": "https://simonwillison.net/2026/Nov/17/gpt62-astra-and-sol",
+   "event_key": "openai-gpt-6-2-astra-sol-release",
+   "title_hash": "17874f726fc2",
+   "sent_on": "2026-11-18"
+  },
+  {
+   "url": "https://platform.claude.com/docs/en/release-notes/overview#linked-billing",
+   "event_key": "https://platform.claude.com/docs/en/release-notes/overview#linked-billing",
+   "title_hash": "ae2e8000a9e0",
+   "sent_on": "2026-11-18"
+  },
+  {
+   "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.327",
+   "event_key": "https://github.com/anthropics/claude-code/releases/tag/v2.1.327",
+   "title_hash": "69f313f8a51a",
+   "sent_on": "2026-11-18"
+  },
+  {
+   "url": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.10.0",
+   "event_key": "https://github.com/anthropics/anthropic-sdk-python/releases/tag/v2.10.0",
+   "title_hash": "74fab936c518",
+   "sent_on": "2026-11-18"
+  },
+  {
+   "url": "https://github.com/openai/openai-python/releases/tag/v3.54.0",
+   "event_key": "https://github.com/openai/openai-python/releases/tag/v3.54.0",
+   "title_hash": "00a52747815e",
+   "sent_on": "2026-11-18"
+  },
+  {
+   "url": "https://github.com/googleapis/python-genai/releases/tag/v3.5.0",
+   "event_key": "https://github.com/googleapis/python-genai/releases/tag/v3.5.0",
+   "title_hash": "e14afbb0436b",
+   "sent_on": "2026-11-18"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-17-github-copilot-fusion-updates-more-availability-benchmarks-and-models",
+   "event_key": "https://github.blog/changelog/2026-11-17-github-copilot-fusion-updates-more-availability-benchmarks-and-models",
+   "title_hash": "99aa43debbfa",
+   "sent_on": "2026-11-18"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-17-github-copilot-app-microsoft-ignite-releases",
+   "event_key": "https://github.blog/changelog/2026-11-17-github-copilot-app-microsoft-ignite-releases",
+   "title_hash": "79ab183b2525",
+   "sent_on": "2026-11-18"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-17-copilot-code-review-adaptive-effort-secret-detection-and-more",
+   "event_key": "https://github.blog/changelog/2026-11-17-copilot-code-review-adaptive-effort-secret-detection-and-more",
+   "title_hash": "3fb1a24dc6e7",
+   "sent_on": "2026-11-18"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-17-mai-code-2-and-mai-code-2-flash-in-github-copilot",
+   "event_key": "https://github.blog/changelog/2026-11-17-mai-code-2-and-mai-code-2-flash-in-github-copilot",
+   "title_hash": "ec4d20c7ee5f",
+   "sent_on": "2026-11-18"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-17-github-copilot-in-jetbrains-ignite-releases",
+   "event_key": "https://github.blog/changelog/2026-11-17-github-copilot-in-jetbrains-ignite-releases",
+   "title_hash": "e4f2b4ac56aa",
+   "sent_on": "2026-11-18"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-17-monitor-github-copilot-activity-through-microsoft-agent-365",
+   "event_key": "https://github.blog/changelog/2026-11-17-monitor-github-copilot-activity-through-microsoft-agent-365",
+   "title_hash": "738e263f56c9",
+   "sent_on": "2026-11-18"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-17-github-copilot-cli-adds-microsoft-entra-sign-in-as-a-preview",
+   "event_key": "https://github.blog/changelog/2026-11-17-github-copilot-cli-adds-microsoft-entra-sign-in-as-a-preview",
+   "title_hash": "21fee21bac8e",
+   "sent_on": "2026-11-18"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-17-track-copilot-code-review-outcomes-in-repository-insights",
+   "event_key": "https://github.blog/changelog/2026-11-17-track-copilot-code-review-outcomes-in-repository-insights",
+   "title_hash": "04f4d31f9988",
+   "sent_on": "2026-11-18"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-17-github-copilot-evals-is-now-in-public-preview",
+   "event_key": "https://github.blog/changelog/2026-11-17-github-copilot-evals-is-now-in-public-preview",
+   "title_hash": "1d652a5107a6",
+   "sent_on": "2026-11-18"
   }
  ]
 }

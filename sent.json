@@ -48,6 +48,12 @@
    "sent_at": "2026-11-18T03:04:20.454013Z",
    "run_id": "20261118T030420Z-bbd13c",
    "count": 15
+  },
+  {
+   "date": "2026-11-19",
+   "sent_at": "2026-11-19T03:43:30.079051Z",
+   "run_id": "20261119T034330Z-c35109",
+   "count": 11
   }
  ],
  "entries": [
@@ -566,6 +572,78 @@
    "event_key": "https://github.blog/changelog/2026-11-17-github-copilot-evals-is-now-in-public-preview",
    "title_hash": "1d652a5107a6",
    "sent_on": "2026-11-18"
+  },
+  {
+   "url": "https://aistudio.google.com/docs/changelog#11-18-2026",
+   "event_key": "google-gemini-4-neon-ga-release",
+   "title_hash": "1c21529f0f48",
+   "sent_on": "2026-11-19"
+  },
+  {
+   "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon",
+   "event_key": "google-gemini-4-neon-ga-release",
+   "title_hash": "1c21529f0f48",
+   "sent_on": "2026-11-19"
+  },
+  {
+   "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.328",
+   "event_key": "anthropic-claude-code-v2.1.328-release",
+   "title_hash": "060909c13eed",
+   "sent_on": "2026-11-19"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-18-wait-for-pull-request-events-with-github-cli",
+   "event_key": "github-cli-v2.105.0-pr-event-streams-release",
+   "title_hash": "50313f1c9246",
+   "sent_on": "2026-11-19"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-18-gemini-4-neon-in-github-copilot",
+   "event_key": "https://github.blog/changelog/2026-11-18-gemini-4-neon-in-github-copilot",
+   "title_hash": "0cf28c97768f",
+   "sent_on": "2026-11-19"
+  },
+  {
+   "url": "https://github.com/openai/openai-python/releases/tag/v3.55.0",
+   "event_key": "https://github.com/openai/openai-python/releases/tag/v3.55.0",
+   "title_hash": "43c43f765a6e",
+   "sent_on": "2026-11-19"
+  },
+  {
+   "url": "https://github.com/openai/codex/releases/tag/rust-v0.170.0",
+   "event_key": "https://github.com/openai/codex/releases/tag/rust-v0.170.0",
+   "title_hash": "ba010aae80a2",
+   "sent_on": "2026-11-19"
+  },
+  {
+   "url": "https://aistudio.google.com/docs/changelog#11-17-2026",
+   "event_key": "https://aistudio.google.com/docs/changelog#11-17-2026",
+   "title_hash": "fe5a9db4d80f",
+   "sent_on": "2026-11-19"
+  },
+  {
+   "url": "https://github.com/googleapis/python-genai/releases/tag/v3.6.0",
+   "event_key": "https://github.com/googleapis/python-genai/releases/tag/v3.6.0",
+   "title_hash": "29cb4ce6a478",
+   "sent_on": "2026-11-19"
+  },
+  {
+   "url": "https://github.com/google-gemini/gemini-cli/releases/tag/v0.69.0",
+   "event_key": "https://github.com/google-gemini/gemini-cli/releases/tag/v0.69.0",
+   "title_hash": "06c863762221",
+   "sent_on": "2026-11-19"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-18-connect-supabase-box-calendly-and-more-to-copilot",
+   "event_key": "https://github.blog/changelog/2026-11-18-connect-supabase-box-calendly-and-more-to-copilot",
+   "title_hash": "6b2ff03186b5",
+   "sent_on": "2026-11-19"
+  },
+  {
+   "url": "https://github.blog/changelog/2026-11-18-customize-github-copilot-for-your-team",
+   "event_key": "https://github.blog/changelog/2026-11-18-customize-github-copilot-for-your-team",
+   "title_hash": "490c01f3cfaa",
+   "sent_on": "2026-11-19"
   }
  ]
 }

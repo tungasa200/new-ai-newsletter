@@ -2384,6 +2384,21 @@
    "warnings": [
     "권장 사항 메모 갱신 실패: 출력이 max_tokens에서 잘림"
    ]
+  },
+  {
+   "run_id": "20261120T033702Z-c6cb17",
+   "date": "2026-11-20",
+   "started_at": "2026-11-20T03:37:02.684716Z",
+   "finished_at": "2026-11-20T03:37:02.685792Z",
+   "status": "skipped",
+   "failed_stage": null,
+   "error": null,
+   "sent": false,
+   "dry_run": false,
+   "cost_usd": 0.0,
+   "tokens": {},
+   "source_stats": [],
+   "warnings": []
   }
  ],
  "sources": {

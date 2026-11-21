@@ -2399,11 +2399,149 @@
    "tokens": {},
    "source_stats": [],
    "warnings": []
+  },
+  {
+   "run_id": "20261121T024213Z-6876e9",
+   "date": "2026-11-21",
+   "started_at": "2026-11-21T02:42:13.087537Z",
+   "finished_at": "2026-11-21T02:42:28.207778Z",
+   "status": "skipped",
+   "failed_stage": null,
+   "error": null,
+   "sent": false,
+   "dry_run": false,
+   "cost_usd": 0.002002,
+   "tokens": {
+    "claude-haiku-5-5:input": 10580,
+    "claude-haiku-5-5:output": 1806
+   },
+   "source_stats": [
+    {
+     "source": "Claude Platform release notes",
+     "ok": true,
+     "count": 2,
+     "error": null,
+     "newest_at": "2026-11-17T00:00:00Z"
+    },
+    {
+     "source": "Claude Code releases",
+     "ok": false,
+     "count": 0,
+     "error": "HTTPStatusError: Client error '403 rate limit exceeded' for url 'https://api.github.com/repos/anthropics/claude-code/releases?per_page=50'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403",
+     "newest_at": null
+    },
+    {
+     "source": "Anthropic Python SDK releases",
+     "ok": false,
+     "count": 0,
+     "error": "HTTPStatusError: Client error '403 rate limit exceeded' for url 'https://api.github.com/repos/anthropics/anthropic-sdk-python/releases?per_page=50'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403",
+     "newest_at": null
+    },
+    {
+     "source": "Anthropic News & Engineering",
+     "ok": true,
+     "count": 1,
+     "error": null,
+     "newest_at": "2026-11-20T12:41:01.161000Z"
+    },
+    {
+     "source": "OpenAI News",
+     "ok": true,
+     "count": 1,
+     "error": null,
+     "newest_at": "2026-11-20T10:00:00Z"
+    },
+    {
+     "source": "OpenAI Python SDK releases",
+     "ok": false,
+     "count": 0,
+     "error": "HTTPStatusError: Client error '403 rate limit exceeded' for url 'https://api.github.com/repos/openai/openai-python/releases?per_page=50'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403",
+     "newest_at": null
+    },
+    {
+     "source": "OpenAI Codex releases",
+     "ok": false,
+     "count": 0,
+     "error": "HTTPStatusError: Client error '403 rate limit exceeded' for url 'https://api.github.com/repos/openai/codex/releases?per_page=50'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403",
+     "newest_at": null
+    },
+    {
+     "source": "Gemini API changelog",
+     "ok": true,
+     "count": 3,
+     "error": null,
+     "newest_at": "2026-11-19T00:00:00Z"
+    },
+    {
+     "source": "Google GenAI Python SDK releases",
+     "ok": false,
+     "count": 0,
+     "error": "HTTPStatusError: Client error '403 rate limit exceeded' for url 'https://api.github.com/repos/googleapis/python-genai/releases?per_page=50'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403",
+     "newest_at": null
+    },
+    {
+     "source": "Gemini CLI releases",
+     "ok": false,
+     "count": 0,
+     "error": "HTTPStatusError: Client error '403 rate limit exceeded' for url 'https://api.github.com/repos/google-gemini/gemini-cli/releases?per_page=50'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403",
+     "newest_at": null
+    },
+    {
+     "source": "Google Developers Blog",
+     "ok": true,
+     "count": 6,
+     "error": null,
+     "newest_at": "2026-11-20T00:00:00Z"
+    },
+    {
+     "source": "GitHub Changelog",
+     "ok": true,
+     "count": 0,
+     "error": null,
+     "newest_at": "2026-11-19T00:00:13Z"
+    },
+    {
+     "source": "Cursor changelog",
+     "ok": true,
+     "count": 0,
+     "error": null,
+     "newest_at": "2026-11-06T00:00:00Z"
+    },
+    {
+     "source": "Hacker News",
+     "ok": true,
+     "count": 9,
+     "error": null,
+     "newest_at": "2026-11-20T18:15:16Z"
+    },
+    {
+     "source": "Simon Willison",
+     "ok": true,
+     "count": 3,
+     "error": null,
+     "newest_at": "2026-11-20T19:21:49Z"
+    },
+    {
+     "source": "Latent Space",
+     "ok": true,
+     "count": 2,
+     "error": null,
+     "newest_at": "2026-11-20T21:18:41Z"
+    },
+    {
+     "source": "GeekNews",
+     "ok": true,
+     "count": 10,
+     "error": null,
+     "newest_at": "2026-11-21T01:32:44Z"
+    }
+   ],
+   "warnings": []
   }
  ],
  "sources": {
   "Claude Platform release notes": {
-   "last_success_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T02:42:13.087537Z",
    "cursor_at": "2026-11-20T02:30:32.873359Z",
    "last_new_item_at": "2026-11-17T00:00:00Z",
    "consecutive_failures": 0
@@ -2412,40 +2550,40 @@
    "last_success_at": "2026-11-20T02:30:32.873359Z",
    "cursor_at": "2026-11-20T02:30:32.873359Z",
    "last_new_item_at": "2026-11-19T22:14:41Z",
-   "consecutive_failures": 0
+   "consecutive_failures": 1
   },
   "Anthropic Python SDK releases": {
    "last_success_at": "2026-11-20T02:30:32.873359Z",
    "cursor_at": "2026-11-20T02:30:32.873359Z",
    "last_new_item_at": "2026-11-19T19:14:21Z",
-   "consecutive_failures": 0
+   "consecutive_failures": 1
   },
   "Anthropic News & Engineering": {
-   "last_success_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T02:42:13.087537Z",
    "cursor_at": "2026-11-20T02:30:32.873359Z",
-   "last_new_item_at": "2026-11-18T23:26:25.522000Z",
+   "last_new_item_at": "2026-11-20T12:41:01.161000Z",
    "consecutive_failures": 0
   },
   "OpenAI News": {
-   "last_success_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T02:42:13.087537Z",
    "cursor_at": "2026-11-20T02:30:32.873359Z",
-   "last_new_item_at": "2026-11-19T08:00:00Z",
+   "last_new_item_at": "2026-11-20T10:00:00Z",
    "consecutive_failures": 0
   },
   "OpenAI Python SDK releases": {
    "last_success_at": "2026-11-20T02:30:32.873359Z",
    "cursor_at": "2026-11-20T02:30:32.873359Z",
    "last_new_item_at": "2026-11-20T01:27:57Z",
-   "consecutive_failures": 0
+   "consecutive_failures": 1
   },
   "OpenAI Codex releases": {
    "last_success_at": "2026-11-20T02:30:32.873359Z",
    "cursor_at": "2026-11-20T02:30:32.873359Z",
    "last_new_item_at": "2026-11-20T00:44:47Z",
-   "consecutive_failures": 0
+   "consecutive_failures": 1
   },
   "Gemini API changelog": {
-   "last_success_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T02:42:13.087537Z",
    "cursor_at": "2026-11-20T02:30:32.873359Z",
    "last_new_item_at": "2026-11-19T00:00:00Z",
    "consecutive_failures": 0
@@ -2454,54 +2592,54 @@
    "last_success_at": "2026-11-20T02:30:32.873359Z",
    "cursor_at": "2026-11-20T02:30:32.873359Z",
    "last_new_item_at": "2026-11-18T21:48:51Z",
-   "consecutive_failures": 0
+   "consecutive_failures": 1
   },
   "Gemini CLI releases": {
    "last_success_at": "2026-11-20T02:30:32.873359Z",
    "cursor_at": "2026-11-20T02:30:32.873359Z",
    "last_new_item_at": "2026-11-19T21:08:05Z",
-   "consecutive_failures": 0
+   "consecutive_failures": 1
   },
   "Google Developers Blog": {
-   "last_success_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T02:42:13.087537Z",
    "cursor_at": "2026-11-20T02:30:32.873359Z",
-   "last_new_item_at": "2026-11-19T00:00:00Z",
+   "last_new_item_at": "2026-11-20T00:00:00Z",
    "consecutive_failures": 0
   },
   "GitHub Changelog": {
-   "last_success_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T02:42:13.087537Z",
    "cursor_at": "2026-11-20T02:30:32.873359Z",
    "last_new_item_at": "2026-11-19T00:00:13Z",
    "consecutive_failures": 0
   },
   "Cursor changelog": {
-   "last_success_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T02:42:13.087537Z",
    "cursor_at": "2026-11-20T02:30:32.873359Z",
    "last_new_item_at": "2026-11-06T00:00:00Z",
    "consecutive_failures": 0
   },
   "Hacker News": {
-   "last_success_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T02:42:13.087537Z",
    "cursor_at": "2026-11-20T02:30:32.873359Z",
-   "last_new_item_at": "2026-11-19T23:35:35Z",
+   "last_new_item_at": "2026-11-20T18:15:16Z",
    "consecutive_failures": 0
   },
   "Simon Willison": {
-   "last_success_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T02:42:13.087537Z",
    "cursor_at": "2026-11-20T02:30:32.873359Z",
-   "last_new_item_at": "2026-11-19T20:43:57Z",
+   "last_new_item_at": "2026-11-20T19:21:49Z",
    "consecutive_failures": 0
   },
   "Latent Space": {
-   "last_success_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T02:42:13.087537Z",
    "cursor_at": "2026-11-20T02:30:32.873359Z",
-   "last_new_item_at": "2026-11-19T23:58:21Z",
+   "last_new_item_at": "2026-11-20T21:18:41Z",
    "consecutive_failures": 0
   },
   "GeekNews": {
-   "last_success_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T02:42:13.087537Z",
    "cursor_at": "2026-11-20T02:30:32.873359Z",
-   "last_new_item_at": "2026-11-20T01:22:32Z",
+   "last_new_item_at": "2026-11-21T01:32:44Z",
    "consecutive_failures": 0
   }
  }

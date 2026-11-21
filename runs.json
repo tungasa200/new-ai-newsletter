@@ -2537,109 +2537,249 @@
     }
    ],
    "warnings": []
+  },
+  {
+   "run_id": "20261121T031937Z-d49058",
+   "date": "2026-11-21",
+   "started_at": "2026-11-21T03:19:37.264516Z",
+   "finished_at": "2026-11-21T03:20:30.898975Z",
+   "status": "ok",
+   "failed_stage": null,
+   "error": null,
+   "sent": true,
+   "dry_run": false,
+   "cost_usd": 0.090729,
+   "tokens": {
+    "claude-haiku-5-5:input": 12812,
+    "claude-haiku-5-5:output": 2152,
+    "claude-sonnet-5-5:input": 15909,
+    "claude-sonnet-5-5:output": 5443
+   },
+   "source_stats": [
+    {
+     "source": "Claude Platform release notes",
+     "ok": true,
+     "count": 2,
+     "error": null,
+     "newest_at": "2026-11-17T00:00:00Z"
+    },
+    {
+     "source": "Claude Code releases",
+     "ok": true,
+     "count": 5,
+     "error": null,
+     "newest_at": "2026-11-20T22:32:56Z"
+    },
+    {
+     "source": "Anthropic Python SDK releases",
+     "ok": true,
+     "count": 4,
+     "error": null,
+     "newest_at": "2026-11-20T15:56:21Z"
+    },
+    {
+     "source": "Anthropic News & Engineering",
+     "ok": true,
+     "count": 1,
+     "error": null,
+     "newest_at": "2026-11-20T12:41:01.161000Z"
+    },
+    {
+     "source": "OpenAI News",
+     "ok": true,
+     "count": 1,
+     "error": null,
+     "newest_at": "2026-11-20T10:00:00Z"
+    },
+    {
+     "source": "OpenAI Python SDK releases",
+     "ok": true,
+     "count": 7,
+     "error": null,
+     "newest_at": "2026-11-20T01:27:57Z"
+    },
+    {
+     "source": "OpenAI Codex releases",
+     "ok": true,
+     "count": 3,
+     "error": null,
+     "newest_at": "2026-11-20T00:44:47Z"
+    },
+    {
+     "source": "Gemini API changelog",
+     "ok": true,
+     "count": 3,
+     "error": null,
+     "newest_at": "2026-11-19T00:00:00Z"
+    },
+    {
+     "source": "Google GenAI Python SDK releases",
+     "ok": true,
+     "count": 4,
+     "error": null,
+     "newest_at": "2026-11-18T21:48:51Z"
+    },
+    {
+     "source": "Gemini CLI releases",
+     "ok": true,
+     "count": 2,
+     "error": null,
+     "newest_at": "2026-11-19T21:08:05Z"
+    },
+    {
+     "source": "Google Developers Blog",
+     "ok": true,
+     "count": 6,
+     "error": null,
+     "newest_at": "2026-11-20T00:00:00Z"
+    },
+    {
+     "source": "GitHub Changelog",
+     "ok": true,
+     "count": 0,
+     "error": null,
+     "newest_at": "2026-11-19T00:00:13Z"
+    },
+    {
+     "source": "Cursor changelog",
+     "ok": true,
+     "count": 0,
+     "error": null,
+     "newest_at": "2026-11-06T00:00:00Z"
+    },
+    {
+     "source": "Hacker News",
+     "ok": true,
+     "count": 9,
+     "error": null,
+     "newest_at": "2026-11-20T18:15:16Z"
+    },
+    {
+     "source": "Simon Willison",
+     "ok": true,
+     "count": 3,
+     "error": null,
+     "newest_at": "2026-11-20T19:21:49Z"
+    },
+    {
+     "source": "Latent Space",
+     "ok": true,
+     "count": 2,
+     "error": null,
+     "newest_at": "2026-11-20T21:18:41Z"
+    },
+    {
+     "source": "GeekNews",
+     "ok": true,
+     "count": 10,
+     "error": null,
+     "newest_at": "2026-11-21T02:37:39Z"
+    }
+   ],
+   "warnings": []
   }
  ],
  "sources": {
   "Claude Platform release notes": {
-   "last_success_at": "2026-11-21T02:42:13.087537Z",
-   "cursor_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T03:19:37.264516Z",
+   "cursor_at": "2026-11-21T03:19:37.264516Z",
    "last_new_item_at": "2026-11-17T00:00:00Z",
    "consecutive_failures": 0
   },
   "Claude Code releases": {
-   "last_success_at": "2026-11-20T02:30:32.873359Z",
-   "cursor_at": "2026-11-20T02:30:32.873359Z",
-   "last_new_item_at": "2026-11-19T22:14:41Z",
-   "consecutive_failures": 1
+   "last_success_at": "2026-11-21T03:19:37.264516Z",
+   "cursor_at": "2026-11-21T03:19:37.264516Z",
+   "last_new_item_at": "2026-11-20T22:32:56Z",
+   "consecutive_failures": 0
   },
   "Anthropic Python SDK releases": {
-   "last_success_at": "2026-11-20T02:30:32.873359Z",
-   "cursor_at": "2026-11-20T02:30:32.873359Z",
-   "last_new_item_at": "2026-11-19T19:14:21Z",
-   "consecutive_failures": 1
+   "last_success_at": "2026-11-21T03:19:37.264516Z",
+   "cursor_at": "2026-11-21T03:19:37.264516Z",
+   "last_new_item_at": "2026-11-20T15:56:21Z",
+   "consecutive_failures": 0
   },
   "Anthropic News & Engineering": {
-   "last_success_at": "2026-11-21T02:42:13.087537Z",
-   "cursor_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T03:19:37.264516Z",
+   "cursor_at": "2026-11-21T03:19:37.264516Z",
    "last_new_item_at": "2026-11-20T12:41:01.161000Z",
    "consecutive_failures": 0
   },
   "OpenAI News": {
-   "last_success_at": "2026-11-21T02:42:13.087537Z",
-   "cursor_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T03:19:37.264516Z",
+   "cursor_at": "2026-11-21T03:19:37.264516Z",
    "last_new_item_at": "2026-11-20T10:00:00Z",
    "consecutive_failures": 0
   },
   "OpenAI Python SDK releases": {
-   "last_success_at": "2026-11-20T02:30:32.873359Z",
-   "cursor_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T03:19:37.264516Z",
+   "cursor_at": "2026-11-21T03:19:37.264516Z",
    "last_new_item_at": "2026-11-20T01:27:57Z",
-   "consecutive_failures": 1
+   "consecutive_failures": 0
   },
   "OpenAI Codex releases": {
-   "last_success_at": "2026-11-20T02:30:32.873359Z",
-   "cursor_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T03:19:37.264516Z",
+   "cursor_at": "2026-11-21T03:19:37.264516Z",
    "last_new_item_at": "2026-11-20T00:44:47Z",
-   "consecutive_failures": 1
+   "consecutive_failures": 0
   },
   "Gemini API changelog": {
-   "last_success_at": "2026-11-21T02:42:13.087537Z",
-   "cursor_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T03:19:37.264516Z",
+   "cursor_at": "2026-11-21T03:19:37.264516Z",
    "last_new_item_at": "2026-11-19T00:00:00Z",
    "consecutive_failures": 0
   },
   "Google GenAI Python SDK releases": {
-   "last_success_at": "2026-11-20T02:30:32.873359Z",
-   "cursor_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T03:19:37.264516Z",
+   "cursor_at": "2026-11-21T03:19:37.264516Z",
    "last_new_item_at": "2026-11-18T21:48:51Z",
-   "consecutive_failures": 1
+   "consecutive_failures": 0
   },
   "Gemini CLI releases": {
-   "last_success_at": "2026-11-20T02:30:32.873359Z",
-   "cursor_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T03:19:37.264516Z",
+   "cursor_at": "2026-11-21T03:19:37.264516Z",
    "last_new_item_at": "2026-11-19T21:08:05Z",
-   "consecutive_failures": 1
+   "consecutive_failures": 0
   },
   "Google Developers Blog": {
-   "last_success_at": "2026-11-21T02:42:13.087537Z",
-   "cursor_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T03:19:37.264516Z",
+   "cursor_at": "2026-11-21T03:19:37.264516Z",
    "last_new_item_at": "2026-11-20T00:00:00Z",
    "consecutive_failures": 0
   },
   "GitHub Changelog": {
-   "last_success_at": "2026-11-21T02:42:13.087537Z",
-   "cursor_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T03:19:37.264516Z",
+   "cursor_at": "2026-11-21T03:19:37.264516Z",
    "last_new_item_at": "2026-11-19T00:00:13Z",
    "consecutive_failures": 0
   },
   "Cursor changelog": {
-   "last_success_at": "2026-11-21T02:42:13.087537Z",
-   "cursor_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T03:19:37.264516Z",
+   "cursor_at": "2026-11-21T03:19:37.264516Z",
    "last_new_item_at": "2026-11-06T00:00:00Z",
    "consecutive_failures": 0
   },
   "Hacker News": {
-   "last_success_at": "2026-11-21T02:42:13.087537Z",
-   "cursor_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T03:19:37.264516Z",
+   "cursor_at": "2026-11-21T03:19:37.264516Z",
    "last_new_item_at": "2026-11-20T18:15:16Z",
    "consecutive_failures": 0
   },
   "Simon Willison": {
-   "last_success_at": "2026-11-21T02:42:13.087537Z",
-   "cursor_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T03:19:37.264516Z",
+   "cursor_at": "2026-11-21T03:19:37.264516Z",
    "last_new_item_at": "2026-11-20T19:21:49Z",
    "consecutive_failures": 0
   },
   "Latent Space": {
-   "last_success_at": "2026-11-21T02:42:13.087537Z",
-   "cursor_at": "2026-11-20T02:30:32.873359Z",
+   "last_success_at": "2026-11-21T03:19:37.264516Z",
+   "cursor_at": "2026-11-21T03:19:37.264516Z",
    "last_new_item_at": "2026-11-20T21:18:41Z",
    "consecutive_failures": 0
   },
   "GeekNews": {
-   "last_success_at": "2026-11-21T02:42:13.087537Z",
-   "cursor_at": "2026-11-20T02:30:32.873359Z",
-   "last_new_item_at": "2026-11-21T01:32:44Z",
+   "last_success_at": "2026-11-21T03:19:37.264516Z",
+   "cursor_at": "2026-11-21T03:19:37.264516Z",
+   "last_new_item_at": "2026-11-21T02:37:39Z",
    "consecutive_failures": 0
   }
  }
